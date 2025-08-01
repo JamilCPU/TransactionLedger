@@ -2,10 +2,10 @@ using Backend.data.entities;
 namespace Backend.repository.intrface{
     public interface IUserRepository
     {
-        void createUser(UserEntity user);
-        void updateUser(UserEntity user);
-        void deleteUser(int id);
-        UserEntity getUserById(int id);
-        List<UserEntity> getAllUsers();
+        Task createUser(UserEntity user);
+        Task updateUser(UserEntity user);
+        Task deleteUser(int id);
+        Task<UserEntity?> getUserById(int id);
+        Task<List<UserEntity>?> getAllUsers();
     }
 }

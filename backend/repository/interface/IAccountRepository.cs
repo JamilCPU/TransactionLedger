@@ -2,10 +2,10 @@ using Backend.data.entities;
 namespace Backend.repository.intrface {
     public interface IAccountRepository
     {
-        void createAccount(AccountEntity account);
-        void updateAccount(AccountEntity account);
-        void deleteAccount(int id);
-        AccountEntity getAccountById(int id);
-        List<AccountEntity> getAllAccounts();
+        Task createAccount(AccountEntity account);
+        Task updateAccount(AccountEntity account);
+        Task deleteAccount(int id);
+        Task<AccountEntity?> getAccountById(int id);
+        Task<List<AccountEntity>?> getAllAccounts();
     }
 }

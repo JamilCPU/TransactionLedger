@@ -1,30 +1,35 @@
+using Backend.data.entities;
+using Backend.repository.intrface;
+using Microsoft.EntityFrameworkCore;
+using Backend.data;
 namespace Backend.repository.impl
 {
     public class UserRepository : IUserRepository
     {
-        public void createUser(User user)
+        private readonly BankContext _context;
+        public async Task createUser(UserEntity user)
         {
 
         }
 
-        public void updateUser(User user)
+        public async Task updateUser(UserEntity user)
         {
 
         }
 
-        public void deleteUser(int id)
+        public async Task deleteUser(int id)
         {
 
         }
-
-        public User getUserById(int id)
+    
+        public async Task<UserEntity?> getUserById(int id)
         {
-
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public List<User> getAllUsers()
+        public async Task<List<UserEntity>?> getAllUsers()
         {
-
+            return await _context.Users.ToListAsync();
         }
     }
 }

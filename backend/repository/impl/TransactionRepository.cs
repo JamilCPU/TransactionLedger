@@ -1,28 +1,33 @@
-
+using Backend.data.entities;
+using Backend.repository.intrface;
+using Microsoft.EntityFrameworkCore;
+using Backend.data;
 namespace Backend.repository.impl
 {
     public class TransactionRepository : ITransactionRepository
     {
         private readonly BankContext _context;
 
-        public void createTransaction(Transaction transaction)
+        public async Task createTransaction(TransactionEntity transaction)
         {
         }
 
-        public void updateTransaction(Transaction transaction)
+        public async Task updateTransaction(TransactionEntity transaction)
         {
         }
 
-        public void deleteTransaction(int id)
+        public async Task deleteTransaction(int id)
         {
         }
 
-        public Transaction getTransactionById(int id)
+        public async Task<TransactionEntity?> getTransactionById(int id)
         {
+            return await _context.Transactions.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public List<Transaction> getAllTransactions()
+        public async Task<List<TransactionEntity>?> getAllTransactions()
         {
+            return await _context.Transactions.ToListAsync();
         }
     }
 }

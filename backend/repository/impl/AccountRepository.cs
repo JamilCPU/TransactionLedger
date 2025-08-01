@@ -2,37 +2,38 @@ using System.Threading.Tasks;
 using Backend.data;
 using Backend.repository.intrface;
 using Backend.data.entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.repository.impl
 {
     public class AccountRepository : IAccountRepository
     {
         private readonly BankContext _context;
-        public async void createAccount(AccountEntity account)
+        public async Task createAccount(AccountEntity account)
         {
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
         }
 
-        public void updateAccount(AccountEntity account)
+        public async Task updateAccount(AccountEntity account)
         {
 
         }
 
-        public void deleteAccount(int id)
+        public async Task deleteAccount(int id)
         {
 
         }
 
-        public async AccountEntity getAccountById(int id)
+        public async Task<AccountEntity?> getAccountById(int id)
         {
             return await _context.Accounts
-            .FirstOrDefaultAsync(a => a.AccountId == id);
+            .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public List<AccountEntity> getAllAccounts()
+        public async Task<List<AccountEntity>?> getAllAccounts()
         {
-
+            return await _context.Accounts.ToListAsync();
         }
     }
 }
