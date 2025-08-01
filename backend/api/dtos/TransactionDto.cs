@@ -1,3 +1,7 @@
-public class TransactionRequestDto{
-    private decimal amount {get; set;}
+namespace Backend.api.dtos
+{
+    public class TransactionRequestDto
+    {
+        public decimal amount { get; set; }
+    }
 }

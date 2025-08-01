@@ -1,10 +1,17 @@
-public class TransactionService : ITransactionService{
-    public void createTransaction(int id, decimal amount){
-    }   
+namespace Backend.service.impl
+{
+    public class TransactionService : ITransactionService
+    {
+        public void createTransaction(int id, decimal amount)
+        {
+        }
 
-    public void getTransactionById(int id){
-    }
+        public void getTransactionById(int id)
+        {
+        }
 
-    public void getAllTransactions(int id){
+        public void getAllTransactions(int id)
+        {
+        }
     }
 }

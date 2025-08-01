@@ -1,6 +1,10 @@
-public class UserDto{
-    private string username {get; set;}
-    private string password {get; set;}
-    private string email {get; set;}
-    private string phone {get; set;}
+namespace Backend.api.dtos
+{
+    public class UserDto
+    {
+        public string username { get; set; }
+        public string password { get; set; }
+        public string email { get; set; }
+        public string phone { get; set; }
+    }
 }

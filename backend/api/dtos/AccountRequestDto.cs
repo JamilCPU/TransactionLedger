@@ -1,3 +1,7 @@
-public class AccountRequestDto{
-    private int balance {get; set;}
+namespace Backend.api.dtos
+{
+    public class AccountRequestDto
+    {
+        public int balance { get; set; }
+    }
 }
