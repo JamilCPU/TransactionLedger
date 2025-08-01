@@ -1,10 +1,11 @@
+using Backend.data.entities;
 namespace Backend.repository.intrface {
     public interface IAccountRepository
     {
-        void createAccount(Account account);
-        void updateAccount(Account account);
+        void createAccount(AccountEntity account);
+        void updateAccount(AccountEntity account);
         void deleteAccount(int id);
-        Account getAccountById(int id);
-        List<Account> getAllAccounts();
+        AccountEntity getAccountById(int id);
+        List<AccountEntity> getAllAccounts();
     }
 }

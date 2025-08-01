@@ -1,19 +1,19 @@
 public class User {
-    private int id {get;}
-    private string username {get; set;}
-    private string password {get; set;}
-    private string email {get; set;}
-    private string phone {get; set;}
+    private int Id {get;}
+    private string Username {get; set;}
+    private string Password {get; set;}
+    private string Email {get; set;}
+    private string Phone {get; set;}
 
-    private List<Account> accounts;
+    private List<Account> Accounts;
 
     public User(int id, string username, string password, string email, string phone){
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.accounts = new List<Account>();
+        this.Id = id;
+        this.Username = username;
+        this.Password = password;
+        this.Email = email;
+        this.Phone = phone;
+        this.Accounts = new List<Account>();
 
 
     }

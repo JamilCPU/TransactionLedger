@@ -1,23 +1,23 @@
 public class Account {
-        public enum AccountType{
+        public enum AccountTypeEnum{
         CHECKING, SAVINGS
     }
 
-    public enum AccountStatus{
+    public enum AccountStatusEnum{
         ACTIVE, INACTIVE
     }
-    private int id {get;}
-    private int balance {get; set;}
-    private int userId {get;}
-    private AccountType accountType {get; set;}
-    private AccountStatus accountStatus {get; set;}
+    private int Id {get;}
+    private int Balance {get; set;}
+    private int UserId {get;}
+    private AccountTypeEnum AccountType {get; set;}
+    private AccountStatusEnum AccountStatus {get; set;}
 
-    public Account(int id, AccountType accountType, int userId){
-        this.id = id;
-        this.balance = 0;
-        this.accountType = accountType;
-        this.userId = userId;
-        this.accountStatus = AccountStatus.ACTIVE;
+    public Account(int id, AccountTypeEnum accountType, int userId){
+        this.Id = id;
+        this.Balance = 0;
+        this.AccountType = accountType;
+        this.UserId = userId;
+        this.AccountStatus = AccountStatusEnum.ACTIVE;
         
     }
 }

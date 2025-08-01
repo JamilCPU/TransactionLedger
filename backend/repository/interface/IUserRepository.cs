@@ -1,10 +1,11 @@
+using Backend.data.entities;
 namespace Backend.repository.intrface{
     public interface IUserRepository
     {
-        void createUser(User user);
-        void updateUser(User user);
+        void createUser(UserEntity user);
+        void updateUser(UserEntity user);
         void deleteUser(int id);
-        User getUserById(int id);
-        List<User> getAllUsers();
+        UserEntity getUserById(int id);
+        List<UserEntity> getAllUsers();
     }
 }

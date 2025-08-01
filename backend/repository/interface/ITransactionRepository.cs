@@ -1,10 +1,11 @@
+using Backend.data.entities;
 namespace Backend.repository.intrface{
     public interface ITransactionRepository
     {
-        void createTransaction(Transaction transaction);
-        void updateTransaction(Transaction transaction);
+        void createTransaction(TransactionEntity transaction);
+        void updateTransaction(TransactionEntity transaction);
         void deleteTransaction(int id);
-        Transaction getTransactionById(int id);
+        TransactionEntity getTransactionById(int id);
         List<Transaction> getAllTransactions();
     }
 }
