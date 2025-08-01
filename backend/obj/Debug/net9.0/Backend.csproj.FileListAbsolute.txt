@@ -1,6 +1,0 @@
-F:\Dev\Bank\backend\obj\Debug\net9.0\Backend.csproj.AssemblyReference.cache
-F:\Dev\Bank\backend\obj\Debug\net9.0\Backend.GeneratedMSBuildEditorConfig.editorconfig
-F:\Dev\Bank\backend\obj\Debug\net9.0\Backend.AssemblyInfoInputs.cache
-F:\Dev\Bank\backend\obj\Debug\net9.0\Backend.AssemblyInfo.cs
-F:\Dev\Bank\backend\obj\Debug\net9.0\Backend.csproj.CoreCompileInputs.cache
-F:\Dev\Bank\backend\obj\Debug\net9.0\Backend.sourcelink.json
