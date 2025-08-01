@@ -24,7 +24,7 @@ namespace Backend.repository.impl
         public async Account getAccountById(int id)
         {
             return await _context.Accounts
-            .FirstOrDefaultAsync(a => a.AccountId == id)
+            .FirstOrDefaultAsync(a => a.AccountId == id);
         }
 
         public List<Account> getAllAccounts()

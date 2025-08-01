@@ -1,4 +1,4 @@
-namespace Backend.repository.interface{
+namespace Backend.repository.intrface {
     public interface IAccountRepository
     {
         void createAccount(Account account);

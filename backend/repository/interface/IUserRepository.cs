@@ -1,4 +1,4 @@
-namespace Backend.repository.interface{
+namespace Backend.repository.intrface{
     public interface IUserRepository
     {
         void createUser(User user);
