@@ -9,6 +9,6 @@ namespace Backend.data.entities
         public int Id { get; set; }
         public int Amount { get; set; }
         public TransactionTypeEnum TransactionType { get; set; }
-        public AccountEntity Account { get; set; }
+        public required AccountEntity Account { get; set; }
     }
 }

@@ -18,6 +18,6 @@ namespace Backend.data.entities
         public int UserId { get; set; }
         public AccountTypeEnum AccountType { get; set; }
         public AccountStatusEnum AccountStatus { get; set; }
-        public UserEntity User { get; set; }
+        public required UserEntity User { get; set; }
     }
 }
