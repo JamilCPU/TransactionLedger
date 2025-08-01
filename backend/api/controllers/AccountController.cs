@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
+using Backend.api.dtos;
+
 namespace Backend.api.controllers
 {
     [ApiController]
@@ -5,18 +8,18 @@ namespace Backend.api.controllers
     public class AccountController : ControllerBase
     {
         [HttpPost("{id}/deposit")]
-        public IActionResult deposit(int id, [FromBody] AccountRequestDto accountRequestDto)
+        public IActionResult Deposit(int id, [FromBody] AccountRequestDto accountRequestDto)
         {
             //checks:
             //does id exist
             // amount > 0 
 
-
+            return Ok();
             //execute call business logic
         }
 
         [HttpPost("{id}/withdraw")]
-        public IActionResult withdraw(int id, [FromBody] AccountRequestDto accountRequestDto)
+        public IActionResult Withdraw(int id, [FromBody] AccountRequestDto accountRequestDto)
         {
             //checks:
             //does id exist
@@ -24,10 +27,11 @@ namespace Backend.api.controllers
             //withdrawing should not exceed balance
 
             //execute call business logic
+            return Ok();
         }
 
         [HttpPost("transfer")]
-        public IActionResult transfer(int amount, int fromAccountId, int toAccountId)
+        public IActionResult Transfer(int amount, int fromAccountId, int toAccountId)
         {
 
             //checks:
@@ -36,6 +40,7 @@ namespace Backend.api.controllers
 
 
             //execute call business logic
+            return Ok();
         }
     }
 }

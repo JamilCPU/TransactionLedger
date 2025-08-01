@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
+using Backend.data;
+using Backend.repository.intrface;
 
 namespace Backend.repository.impl
 {
     public class AccountRepository : IAccountRepository
     {
         private readonly BankContext _context;
-        public async Task createAccount(Account account)
+        public async void createAccount(Account account)
         {
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();

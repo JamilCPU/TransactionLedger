@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
+using Backend.api.dtos;
+
 namespace Backend.api.controllers
 {
     [ApiController]
@@ -11,6 +14,7 @@ namespace Backend.api.controllers
             //unique username
             //unique id
 
+            return Ok();
         }
     }
 }

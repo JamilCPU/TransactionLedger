@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
+using Backend.api.dtos;
+
 namespace Backend.api.controllers
 {
     [ApiController]
@@ -11,6 +14,7 @@ namespace Backend.api.controllers
             //does id exist
 
             //execute call business logic
+            return Ok();
         }
 
         [HttpGet("{id}/getTransactionById")]
@@ -20,6 +24,7 @@ namespace Backend.api.controllers
             //does id exist
 
             //execute call business logic
+            return Ok();
         }
     }
 }
