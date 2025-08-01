@@ -1,3 +1,5 @@
+using Xunit;
+
 namespace Backend.api.test
 {
     public class UserControllerTest
