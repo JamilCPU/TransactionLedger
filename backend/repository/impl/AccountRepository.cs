@@ -1,11 +1,14 @@
+using System.Threading.Tasks;
+
 namespace Backend.repository.impl
 {
     public class AccountRepository : IAccountRepository
     {
         private readonly BankContext _context;
-        public void createAccount(Account account)
+        public async Task createAccount(Account account)
         {
-
+            await _context.Accounts.AddAsync(account);
+            await _context.SaveChangesAsync();
         }
 
         public void updateAccount(Account account)
@@ -18,8 +21,10 @@ namespace Backend.repository.impl
 
         }
 
-        public Account getAccountById(int id)
+        public async Account getAccountById(int id)
         {
+            return await _context.Accounts
+            .FirstOrDefaultAsync(a => a.AccountId == id)
         }
 
         public List<Account> getAllAccounts()
