@@ -1,3 +1,7 @@
-public interface IUserService{
-    void createUser(string username, string password);
+using Backend.api.dtos;
+
+namespace Backend.service.intrface{
+    public interface IUserService{
+        Task CreateUser(UserDto userDto);
+    }
 }

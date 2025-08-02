@@ -7,27 +7,28 @@ namespace Backend.repository.impl
     public class UserRepository : IUserRepository
     {
         private readonly BankContext _context;
-        public async Task createUser(UserEntity user)
+        public async Task CreateUser(UserEntity user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateUser(UserEntity user)
         {
 
         }
 
-        public async Task updateUser(UserEntity user)
-        {
-
-        }
-
-        public async Task deleteUser(int id)
+        public async Task DeleteUser(int id)
         {
 
         }
     
-        public async Task<UserEntity?> getUserById(int id)
+        public async Task<UserEntity?> GetUserById(int id)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<List<UserEntity>?> getAllUsers()
+        public async Task<List<UserEntity>?> GetAllUsers()
         {
             return await _context.Users.ToListAsync();
         }

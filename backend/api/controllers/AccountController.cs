@@ -4,7 +4,7 @@ using Backend.api.dtos;
 namespace Backend.api.controllers
 {
     [ApiController]
-    [Route("account")]
+    [Route("api/accounts")]
     public class AccountController : ControllerBase
     {
         [HttpPost("{id}/deposit")]

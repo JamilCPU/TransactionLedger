@@ -1,11 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Backend.data;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace Backend
+{
+    public partial class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<BankContext>(options =>
-    options.UseSqlite("Data Source=bank.db"));
+            builder.Services.AddDbContext<BankContext>(options =>
+                options.UseSqlite("Data Source=bank.db"));
 
-var app = builder.Build();
+            builder.Services.AddControllers();
 
-app.Run();
+            var app = builder.Build();
+
+            app.MapControllers();
+
+            app.Run();
+        }
+    }
+}

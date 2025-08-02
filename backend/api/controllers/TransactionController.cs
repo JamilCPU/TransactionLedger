@@ -4,7 +4,7 @@ using Backend.api.dtos;
 namespace Backend.api.controllers
 {
     [ApiController]
-    [Route("transaction")]
+    [Route("api/transactions")]
     public class TransactionController : ControllerBase
     {
         [HttpGet("{id}/getAllTransactions")]
