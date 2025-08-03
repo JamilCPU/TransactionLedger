@@ -8,7 +8,6 @@ namespace Backend.repository.impl
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly BankContext _context;
         public async Task createAccount(AccountEntity account)
         {
             await _context.Accounts.AddAsync(account);
@@ -34,6 +33,13 @@ namespace Backend.repository.impl
         public async Task<List<AccountEntity>?> getAllAccounts()
         {
             return await _context.Accounts.ToListAsync();
+        }
+
+        private readonly BankContext _context;
+
+        public AccountRepository(BankContext context)
+        {
+            _context = context;
         }
     }
 }

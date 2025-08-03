@@ -6,7 +6,6 @@ namespace Backend.repository.impl
 {
     public class UserRepository : IUserRepository
     {
-        private readonly BankContext _context;
         public async Task CreateUser(UserEntity user)
         {
             _context.Users.Add(user);
@@ -22,7 +21,7 @@ namespace Backend.repository.impl
         {
 
         }
-    
+
         public async Task<UserEntity?> GetUserById(int id)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
@@ -32,5 +31,12 @@ namespace Backend.repository.impl
         {
             return await _context.Users.ToListAsync();
         }
+
+        private readonly BankContext _context;
+
+        public UserRepository(BankContext context)
+        {
+            _context = context;
+}
     }
 }

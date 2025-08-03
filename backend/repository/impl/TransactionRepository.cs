@@ -6,8 +6,6 @@ namespace Backend.repository.impl
 {
     public class TransactionRepository : ITransactionRepository
     {
-        private readonly BankContext _context;
-
         public async Task createTransaction(TransactionEntity transaction)
         {
         }
@@ -28,6 +26,13 @@ namespace Backend.repository.impl
         public async Task<List<TransactionEntity>?> getAllTransactions()
         {
             return await _context.Transactions.ToListAsync();
+        }
+
+        private readonly BankContext _context;
+
+        public TransactionRepository(BankContext context)
+        {
+            _context = context;
         }
     }
 }
