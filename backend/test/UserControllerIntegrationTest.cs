@@ -32,9 +32,33 @@ namespace Backend.api.test
         }
 
         [Fact]
+        public async Task UpdateUser_ReturnsUpdated()
+        {
+            var userDto = new { Username = "smoke2", Password = "password2", Email = "smoke2@gmail.com", Phone = "1234567891" };
+
+            String userId = "1";
+            String endpoint = $"/api/users/${1}";
+            var response = await _client.PostAsJsonAsync(endpoint, userDto);
+            Console.WriteLine(response.Content.ReadAsStringAsync());
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+
+        }
+
+        [Fact]
         public async Task DeleteUser_ReturnsDeleted()
         {
-            
+            String userId = "1";
+            String endpoint = $"api/users/{userId}";
+            Console.WriteLine(endpoint);
+            var response = await _client.DeleteAsync(endpoint);
+
+            Console.WriteLine(response.Content.ReadAsStringAsync());
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
         }
+
+
     }
 }
