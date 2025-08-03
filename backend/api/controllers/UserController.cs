@@ -20,15 +20,47 @@ namespace Backend.api.controllers
             return Ok();
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetUser(int userId)
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> UpdateUser(int userId, [FromBody] UserDto userDto)
         {
+            if (userDto.Username == null || userDto.Password == null || userDto.Email == null || userDto.Phone == null)
+            {
+                return BadRequest("Username, password, email, and phone are required");
+            }
+            await _userService.UpdateUser(userId, userDto);
             return Ok();
         }
 
-    
-    
-    private readonly IUserService _userService;
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            if (userId == null)
+            {
+                return BadRequest("Error: User Id is Null!");
+            }
+            await _userService.DeleteUser(userId);
+            return Ok();
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserById(int userId)
+        {
+            await _userService.GetUserById(userId);
+            return Ok();
+        }
+
+        [HttpGet("getAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            await _userService.GetAllUsers();
+            return Ok();
+        }
+
+
+
+
+
+        private readonly IUserService _userService;
         public UserController(IUserService userService)
         {
             _userService = userService;

@@ -6,20 +6,37 @@ namespace Backend.repository.impl
 {
     public class UserRepository : IUserRepository
     {
-        public async Task CreateUser(UserEntity user)
+        public async Task<UserEntity> CreateUser(UserEntity user)
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+            Console.WriteLine(user.ToString());//debug line
+            return user;
         }
 
-        public async Task UpdateUser(UserEntity user)
+        public async Task<UserEntity> UpdateUser(int id, UserEntity user)
         {
+            var existingUser = await _context.Users.FindAsync(id);
+            if (existingUser == null) return null;
+
+            existingUser.Username = user.Username;
+            existingUser.Password = user.Password;
+            existingUser.Phone = user.Phone;
+            existingUser.Email = user.Email;
+
+            await _context.SaveChangesAsync();
+            return existingUser;
 
         }
 
-        public async Task DeleteUser(int id)
+        public async Task<bool> DeleteUser(int id)
         {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return false;
 
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<UserEntity?> GetUserById(int id)
@@ -29,7 +46,9 @@ namespace Backend.repository.impl
 
         public async Task<List<UserEntity>?> GetAllUsers()
         {
-            return await _context.Users.ToListAsync();
+            List<UserEntity> userEntities = [];
+            userEntities = await _context.Users.ToListAsync();
+            return userEntities;
         }
 
         private readonly BankContext _context;

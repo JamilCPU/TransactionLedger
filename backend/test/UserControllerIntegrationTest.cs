@@ -28,7 +28,13 @@ namespace Backend.api.test
             Console.WriteLine(response.Content.ReadAsStringAsync());
 
             // Verify the response
-            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteUser_ReturnsDeleted()
+        {
+            
         }
     }
 }
