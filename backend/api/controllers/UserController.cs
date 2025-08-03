@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Backend.api.dtos;
 using Backend.service.impl;
+using Backend.service.intrface;
 
 namespace Backend.api.controllers
 {
@@ -11,12 +12,11 @@ namespace Backend.api.controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UserDto userDto)
         {
-            if(userDto.Username == null || userDto.Password == null || userDto.Email == null || userDto.Phone == null)
+            if (userDto.Username == null || userDto.Password == null || userDto.Email == null || userDto.Phone == null)
             {
                 return BadRequest("Username, password, email, and phone are required");
             }
-            UserService userService = new UserService();
-            await userService.CreateUser(userDto);
+            await _userService.CreateUser(userDto);
             return Ok();
         }
 
@@ -26,5 +26,12 @@ namespace Backend.api.controllers
             return Ok();
         }
 
+    
+    
+    private readonly IUserService _userService;
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
     }
 }

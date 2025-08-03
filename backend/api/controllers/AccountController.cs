@@ -42,5 +42,11 @@ namespace Backend.api.controllers
             //execute call business logic
             return Ok();
         }
+
+        private readonly IAccountService _accountService;
+        public AccountController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
     }
 }

@@ -26,5 +26,12 @@ namespace Backend.api.controllers
             //execute call business logic
             return Ok();
         }
+
+
+        private readonly ITransactionService _transactionService;
+        public TransactionController(ITransactionService transactionService)
+        {
+            _transactionService = transactionService;
+        }
     }
 }

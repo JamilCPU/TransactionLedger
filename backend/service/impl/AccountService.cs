@@ -1,3 +1,5 @@
+using Backend.repository.intrface;
+
 namespace Backend.service.impl
 {
     public class AccountService : IAccountService
@@ -12,6 +14,12 @@ namespace Backend.service.impl
 
         public void transfer(int fromAccountId, int toAccountId, decimal amount)
         {
+        }
+
+        private readonly IAccountRepository _accountRepository;
+        public AccountService(IAccountRepository accountRepository)
+        {
+            _accountRepository = accountRepository;
         }
     }
 }

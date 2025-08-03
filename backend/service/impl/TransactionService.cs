@@ -1,3 +1,5 @@
+using Backend.repository.intrface;
+
 namespace Backend.service.impl
 {
     public class TransactionService : ITransactionService
@@ -12,6 +14,12 @@ namespace Backend.service.impl
 
         public void getAllTransactions(int id)
         {
+        }
+
+        private readonly ITransactionRepository _transactionRepository;
+        public TransactionService(ITransactionRepository transactionRepository)
+        {
+            _transactionRepository = transactionRepository;
         }
     }
 }
