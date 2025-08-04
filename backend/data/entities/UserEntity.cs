@@ -10,7 +10,8 @@ namespace Backend.data.entities
 
         public List<AccountEntity> Accounts { get; set; }
 
-        public UserEntity(string username, string password, string email, string phone){
+        public UserEntity(string username, string password, string email, string phone)
+        {
             this.Username = username;
             this.Password = password;
             this.Email = email;
@@ -18,12 +19,18 @@ namespace Backend.data.entities
             this.Accounts = new List<AccountEntity>();
         }
 
-        public UserEntity(string username, string password, string email, string phone, List<AccountEntity> accounts){
+        public UserEntity(string username, string password, string email, string phone, List<AccountEntity> accounts)
+        {
             this.Username = username;
             this.Password = password;
             this.Email = email;
             this.Phone = phone;
             this.Accounts = accounts;
+        }
+
+        public UserEntity()
+        {
+            
         }
     }
 }

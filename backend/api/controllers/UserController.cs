@@ -16,8 +16,8 @@ namespace Backend.api.controllers
             {
                 return BadRequest("Username, password, email, and phone are required");
             }
-            await _userService.CreateUser(userDto);
-            return Ok();
+            var user = await _userService.CreateUser(userDto);
+            return Ok(user);
         }
 
         [HttpPut("{userId}")]
@@ -27,8 +27,8 @@ namespace Backend.api.controllers
             {
                 return BadRequest("Username, password, email, and phone are required");
             }
-            await _userService.UpdateUser(userId, userDto);
-            return Ok();
+            var updatedUser = await _userService.UpdateUser(userId, userDto);
+            return Ok(updatedUser);
         }
 
         [HttpDelete("{userId}")]
@@ -56,8 +56,8 @@ namespace Backend.api.controllers
         [HttpGet("getAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
-            await _userService.GetAllUsers();
-            return Ok();
+            var users = await _userService.GetAllUsers();
+            return Ok(users);
         }
 
 
