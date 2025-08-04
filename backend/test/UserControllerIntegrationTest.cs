@@ -20,15 +20,9 @@ namespace Backend.api.test
         [Fact]
         public async Task CreateUser_ReturnsCreated()
         {
-            var userDto = new { Username = "smoke", Password = "password", Email = "smoke@gmail.com", Phone = "1234567890" };
-
-            // The client sends an HTTP POST request to the test server
-            var response = await _client.PostAsJsonAsync("/api/users", userDto);
-
-            Console.WriteLine(response.Content.ReadAsStringAsync());
-
-            // Verify the response
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var createdUser = await this.CreateUserHelper(_client);
+            Console.WriteLine("blah");
+            Console.WriteLine(createdUser);
         }
 
         [Fact]
@@ -57,6 +51,16 @@ namespace Backend.api.test
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
+        }
+
+        public async Task<UserDto?> CreateUserHelper(HttpClient _client)
+        {
+            var userDto = new { Username = "smoke", Password = "password", Email = "smoke@gmail.com", Phone = "1234567890" };
+            var response = await _client.PostAsJsonAsync("/api/users", userDto);
+            response.EnsureSuccessStatusCode();
+            Console.WriteLine(response.Content);
+        
+            return await response.Content.ReadFromJsonAsync<UserDto>();
         }
 
 

@@ -9,7 +9,7 @@ namespace Backend.api.controllers
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("new")]
         public async Task<IActionResult> CreateUser([FromBody] UserDto userDto)
         {
             if (userDto.Username == null || userDto.Password == null || userDto.Email == null || userDto.Phone == null)
@@ -45,8 +45,12 @@ namespace Backend.api.controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetUserById(int userId)
         {
-            await _userService.GetUserById(userId);
-            return Ok();
+            var user = await _userService.GetUserById(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
         }
 
         [HttpGet("getAllUsers")]

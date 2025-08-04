@@ -25,12 +25,18 @@ namespace Backend
             builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 
-            var dbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..","..", "bank.db");
+            var dbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "bank.db");
             Console.WriteLine($"Database {dbPath}");
             builder.Services.AddDbContext<BankContext>(options =>
                 options.UseSqlite($"Data Source={Path.GetFullPath(dbPath)}"));
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<BankContext>();
+                db.Database.Migrate();
+            }
 
             app.MapControllers();
 
