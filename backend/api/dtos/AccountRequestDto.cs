@@ -1,12 +1,18 @@
+using Backend.data.entities;
+
 namespace Backend.api.dtos
 {
     public class AccountRequestDto
     {
-        public int balance { get; set; }
+        public decimal Amount { get; set; }
+        public int UserId { get; set; }
+        public AccountEntity.AccountTypeEnum AccountType { get; set; }
 
-        public AccountRequestDto(int balance)
+        public AccountRequestDto(decimal amount, int userId, AccountEntity.AccountTypeEnum accountType)
         {
-            this.balance = balance;
+            this.Amount = amount;
+            this.UserId = userId;
+            this.AccountType = accountType;
         }
     }
 }

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Backend.api.dtos;
+using Backend.service.impl;
+using Backend.service.intrface;
 
 namespace Backend.api.controllers
 {
@@ -7,39 +9,76 @@ namespace Backend.api.controllers
     [Route("api/accounts")]
     public class AccountController : ControllerBase
     {
-        [HttpPost("{id}/deposit")]
-        public IActionResult Deposit(int id, [FromBody] AccountRequestDto accountRequestDto)
+        [HttpPost("new")]
+        public async Task<IActionResult> CreateAccount([FromBody] AccountRequestDto accountRequestDto)
         {
-            //checks:
-            //does id exist
-            // amount > 0 
+            if (accountRequestDto.Amount < 0)
+            {
+                return BadRequest("Initial amount cannot be negative");
+            }
+            var account = await _accountService.CreateAccount(accountRequestDto);
+            return Ok(account);
+        }
 
-            return Ok();
-            //execute call business logic
+        [HttpPost("{id}/deposit")]
+        public async Task<IActionResult> Deposit(int id, [FromBody] AccountRequestDto accountRequestDto)
+        {
+            if (accountRequestDto.Amount <= 0)
+            {
+                return BadRequest("Deposit amount must be greater than 0");
+            }
+            var updatedAccount = await _accountService.Deposit(id, accountRequestDto.Amount);
+            return Ok(updatedAccount);
         }
 
         [HttpPost("{id}/withdraw")]
-        public IActionResult Withdraw(int id, [FromBody] AccountRequestDto accountRequestDto)
+        public async Task<IActionResult> Withdraw(int id, [FromBody] AccountRequestDto accountRequestDto)
         {
-            //checks:
-            //does id exist
-            // amount > 0 
-            //withdrawing should not exceed balance
-
-            //execute call business logic
-            return Ok();
+            if (accountRequestDto.Amount <= 0)
+            {
+                return BadRequest("Withdrawal amount must be greater than 0");
+            }
+            var updatedAccount = await _accountService.Withdraw(id, accountRequestDto.Amount);
+            return Ok(updatedAccount);
         }
 
         [HttpPost("transfer")]
-        public IActionResult Transfer(int amount, int fromAccountId, int toAccountId)
+        public async Task<IActionResult> Transfer([FromBody] TransferRequestDto transferRequestDto)
         {
+            if (transferRequestDto.Amount <= 0)
+            {
+                return BadRequest("Transfer amount must be greater than 0");
+            }
+            if (transferRequestDto.FromAccountId == transferRequestDto.ToAccountId)
+            {
+                return BadRequest("Cannot transfer to the same account");
+            }
+            await _accountService.Transfer(transferRequestDto.FromAccountId, transferRequestDto.ToAccountId, transferRequestDto.Amount);
+            return Ok();
+        }
 
-            //checks:
-            //reference deposit checks
-            //reference withdraw checks
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAccountById(int id)
+        {
+            var account = await _accountService.GetAccountById(id);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            return Ok(account);
+        }
 
+        [HttpGet("getAllAccounts")]
+        public async Task<IActionResult> GetAllAccounts()
+        {
+            var accounts = await _accountService.GetAllAccounts();
+            return Ok(accounts);
+        }
 
-            //execute call business logic
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAccount(int id)
+        {
+            await _accountService.DeleteAccount(id);
             return Ok();
         }
 
@@ -47,6 +86,20 @@ namespace Backend.api.controllers
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
+        }
+    }
+
+    public class TransferRequestDto
+    {
+        public decimal Amount { get; set; }
+        public int FromAccountId { get; set; }
+        public int ToAccountId { get; set; }
+
+        public TransferRequestDto(decimal amount, int fromAccountId, int toAccountId)
+        {
+            this.Amount = amount;
+            this.FromAccountId = fromAccountId;
+            this.ToAccountId = toAccountId;
         }
     }
 }
