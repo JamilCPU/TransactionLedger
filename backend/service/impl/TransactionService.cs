@@ -24,7 +24,9 @@ namespace Backend.service.impl
             {
                 Amount = (int)transactionDto.Amount,
                 TransactionType = transactionDto.TransactionType,
-                Account = account
+                AccountId = transactionDto.AccountId,
+                Account = account,
+                Timestamp = DateTime.UtcNow
             };
 
             return await _transactionRepository.createTransaction(transactionEntity);
@@ -51,7 +53,7 @@ namespace Backend.service.impl
             var allTransactions = await _transactionRepository.getAllTransactions();
             if (allTransactions == null) return new List<TransactionEntity>();
             
-            return allTransactions.Where(t => t.Account.Id == accountId).ToList();
+            return allTransactions.Where(t => t.AccountId == accountId).ToList();
         }
 
         public async Task DeleteTransaction(int id)

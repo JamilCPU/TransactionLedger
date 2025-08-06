@@ -11,29 +11,28 @@ using System.Text.Json;
 
 namespace Backend.api.test
 {
-    public class TransactionControllerTest : IClassFixture<WebApplicationFactory<Program>>
+    public class TransactionControllerTest : BaseTestClass
     {
-        private readonly HttpClient _client;
-        private readonly ITestOutputHelper _output;
-
-        public TransactionControllerTest(WebApplicationFactory<Program> factory, ITestOutputHelper output)
+        public TransactionControllerTest(WebApplicationFactory<Program> factory, ITestOutputHelper output) 
+            : base(factory, output)
         {
-            _client = factory.CreateClient();
-            _output = output;
         }
 
         [Fact]
         public async Task CreateTransaction_ReturnsCreated()
         {
-            await this.CreateTransactionHelper(_client);
+            var transaction = await CreateTestTransaction();
+            Assert.NotNull(transaction);
+            Assert.NotEqual(0, transaction.Id);
         }
 
         [Fact]
         public async Task GetTransaction_ReturnsTransaction()
         {
-            TransactionEntity? transaction = await this.CreateTransactionHelper(_client);
-            String endpoint = $"api/transactions/{transaction.Id}";
+            var transaction = await CreateTestTransaction();
+            var endpoint = $"/api/transactions/{transaction.Id}";
             var response = await _client.GetAsync(endpoint);
+            
             var jsonString = await response.Content.ReadAsStringAsync();
             Console.WriteLine(jsonString);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -42,16 +41,27 @@ namespace Backend.api.test
         [Fact]
         public async Task GetAllTransactions_ReturnsTransactions()
         {
-            var response = await this.GetAllTransactionsHelper(_client);
-            Console.WriteLine(JsonSerializer.Serialize(response));
+            // Create a few test transactions
+            await CreateTestTransaction();
+            await CreateTestTransaction();
+            await CreateTestTransaction();
+            
+            var endpoint = "/api/transactions/getAllTransactions";
+            var response = await _client.GetAsync(endpoint);
+            var transactions = await response.Content.ReadFromJsonAsync<List<TransactionEntity>>();
+            
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(transactions);
+            Assert.True(transactions.Count >= 3); // At least our 3 test transactions
         }
 
         [Fact]
         public async Task GetTransactionsByAccountId_ReturnsTransactions()
         {
-            TransactionEntity? transaction = await this.CreateTransactionHelper(_client);
-            String endpoint = $"api/transactions/account/{transaction.Account.Id}/transactions";
+            var transaction = await CreateTestTransaction();
+            var endpoint = $"/api/transactions/account/{transaction.Account.Id}/transactions";
             var response = await _client.GetAsync(endpoint);
+            
             var jsonString = await response.Content.ReadAsStringAsync();
             Console.WriteLine(jsonString);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -60,52 +70,12 @@ namespace Backend.api.test
         [Fact]
         public async Task DeleteTransaction_ReturnsDeleted()
         {
-            TransactionEntity? createdTransaction = await this.CreateTransactionHelper(_client);
-            String transactionId = createdTransaction.Id.ToString();
-            String endpoint = $"api/transactions/{transactionId}";
+            var transaction = await CreateTestTransaction();
+            var endpoint = $"/api/transactions/{transaction.Id}";
             var response = await _client.DeleteAsync(endpoint);
-            Console.WriteLine(response.Content.ReadAsStringAsync());
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        }
-
-        public async Task<TransactionEntity?> CreateTransactionHelper(HttpClient _client)
-        {
-            // First create a user
-            var userDto = new { Username = "testuser", Password = "password", Email = "test@gmail.com", Phone = "1234567890" };
-            var userResponse = await _client.PostAsJsonAsync("/api/users/new", userDto);
-            userResponse.EnsureSuccessStatusCode();
-            var user = await userResponse.Content.ReadFromJsonAsync<UserEntity>();
             
-            // Then create an account for that user
-            var accountDto = new { Amount = 100.0m, UserId = user.Id, AccountType = AccountEntity.AccountTypeEnum.CHECKING };
-            var accountResponse = await _client.PostAsJsonAsync("/api/accounts/new", accountDto);
-            accountResponse.EnsureSuccessStatusCode();
-            var account = await accountResponse.Content.ReadFromJsonAsync<AccountEntity>();
-            
-            // Then create a transaction for that account
-            var transactionDto = new { Amount = 100.0m, AccountId = account.Id, TransactionType = TransactionEntity.TransactionTypeEnum.DEPOSIT };
-            var response = await _client.PostAsJsonAsync("/api/transactions/new", transactionDto);
-            response.EnsureSuccessStatusCode();
-            var jsonString = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(jsonString);
-            return await response.Content.ReadFromJsonAsync<TransactionEntity>();
-        }
-
-        public async void DeleteTransactionHelper(HttpClient _client, string transactionId)
-        {
-            String endpoint = $"api/transactions/{transactionId}";
-            var response = await _client.DeleteAsync(endpoint);
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        }
-
-        public async Task<List<TransactionEntity>> GetAllTransactionsHelper(HttpClient _client)
-        {
-            String endpoint = $"api/transactions/getAllTransactions";
-            var response = await _client.GetAsync(endpoint);
-            List<TransactionEntity>? transactions = await response.Content.ReadFromJsonAsync<List<TransactionEntity>>();
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            if (transactions == null) return [];
-            return transactions;
         }
     }
 }

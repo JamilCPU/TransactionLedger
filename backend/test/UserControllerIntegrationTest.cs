@@ -11,101 +11,73 @@ using System.Text.Json;
 
 namespace Backend.api.test
 {
-    public class UserControllerIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
+    public class UserControllerIntegrationTest : BaseTestClass
     {
-        private readonly HttpClient _client;
-        private readonly ITestOutputHelper _output;
-
-        public UserControllerIntegrationTest(WebApplicationFactory<Program> factory, ITestOutputHelper output)
+        public UserControllerIntegrationTest(WebApplicationFactory<Program> factory, ITestOutputHelper output) 
+            : base(factory, output)
         {
-            _client = factory.CreateClient(); // This is the "client"
         }
 
         [Fact]
         public async Task CreateUser_ReturnsCreated()
         {
-            await this.CreateUserHelper(_client);
+            var user = await CreateTestUser();
+            Assert.NotNull(user);
+            Assert.NotEqual(0, user.Id);
         }
 
         [Fact]
         public async Task UpdateUser_ReturnsUpdated()
         {
-            UserEntity? user = await this.CreateUserHelper(_client);
+            var user = await CreateTestUser();
             Assert.NotNull(user);
+            
             var updatedUser = new { Username = "updatedUser", Password = "updatedPassword", Email = "updatedEmail@gmail.com", Phone = "0987654321" };
-            String userId = user.Id.ToString();
-            String endpoint = $"/api/users/{userId}";
+            var endpoint = $"/api/users/{user.Id}";
             var response = await _client.PutAsJsonAsync(endpoint, updatedUser);
+            
             Console.WriteLine(await response.Content.ReadAsStringAsync());
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-
         }
 
         [Fact]
         public async Task DeleteUser_ReturnsDeleted()
         {
-            UserEntity? createdUser = await this.CreateUserHelper(_client);
-            String userId = createdUser.Id.ToString();
-            String endpoint = $"api/users/{userId}";
+            var user = await CreateTestUser();
+            var endpoint = $"/api/users/{user.Id}";
             var response = await _client.DeleteAsync(endpoint);
 
-            Console.WriteLine(response.Content.ReadAsStringAsync());
-
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
         }
 
         [Fact]
         public async Task GetUser_ReturnsUser()
         {
-            UserEntity? user = await this.CreateUserHelper(_client);
-
-            String endpoint = $"api/users/{user.Id}";
+            var user = await CreateTestUser();
+            var endpoint = $"/api/users/{user.Id}";
             var response = await _client.GetAsync(endpoint);
+            
             var jsonString = await response.Content.ReadAsStringAsync();
             Console.WriteLine(jsonString);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-
         }
 
         [Fact]
         public async Task GetAllUsers_ReturnsUsers()
         {
-            var response = await this.GetAllUsersHelper(_client);
-            Console.WriteLine(JsonSerializer.Serialize(response));
-        }
-
-        public async Task<UserEntity?> CreateUserHelper(HttpClient _client)
-        {
-
-            var userDto = new { Username = "smoke", Password = "password", Email = "smoke@gmail.com", Phone = "1234567890" };
-            var response = await _client.PostAsJsonAsync("/api/users/new", userDto);
-            response.EnsureSuccessStatusCode();
-            var jsonString = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(jsonString);
-            return await response.Content.ReadFromJsonAsync<UserEntity>();
-
-        }
-
-        public async void DeleteUserHelper(HttpClient _client, string userId)
-        {
-            String endpoint = $"api/users/{userId}";
-            var response = await _client.DeleteAsync(endpoint);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        }
-
-        public async Task<List<UserEntity>> GetAllUsersHelper(HttpClient _client)
-        {
-            String endpoint = $"api/users/getAllUsers";
+            // Create a few test users
+            await CreateTestUser("user1");
+            await CreateTestUser("user2");
+            await CreateTestUser("user3");
+            
+            var endpoint = "/api/users/getAllUsers";
             var response = await _client.GetAsync(endpoint);
-            List<UserEntity>? users = await response.Content.ReadFromJsonAsync<List<UserEntity>>();
+            var users = await response.Content.ReadFromJsonAsync<List<UserEntity>>();
+            
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            if (users == null) return [];
-            return users;
+            Assert.NotNull(users);
+            Assert.True(users.Count >= 3); // At least our 3 test users
         }
-
-
     }
 }
