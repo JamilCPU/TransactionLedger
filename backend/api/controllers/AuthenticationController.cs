@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
+using Backend.api.dtos;
+using Backend.api.services;
+
+
 namespace Backend.api.controllers
 {
     [ApiController]
@@ -5,15 +10,22 @@ namespace Backend.api.controllers
     public class AuthenticationController
     {
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
+        public async Task<IActionResult> Register([FromBody] UserDto userDto)
         {
-            if (registerRequestDto.Username == null || registerRequestDto.Password == null || registerRequestDto.Email == null || registerRequestDto.Phone == null)
+            if (userDto.Username == null || userDto.Password == null || userDto.Email == null || userDto.Phone == null)
             {
                 return BadRequest("Username, password, email, and phone are required");
             }
-            var user = await _userService.Register(registerRequestDto);
+            var user = await _userService.Register(userDto);
+            return Ok(user);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserDto userDto)
+        {
+            var user = await _userService.Login(userDto);
             return Ok(user);
         }
     }
-}
+
 }
