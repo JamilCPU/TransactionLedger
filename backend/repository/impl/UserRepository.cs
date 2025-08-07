@@ -51,6 +51,17 @@ namespace Backend.repository.impl
             return userEntities;
         }
 
+        public async Task<UserEntity?> GetUserByUsername(string username)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        }
+
+        public async Task<UserEntity?> Login(string username, string password)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+        }
+
+
         private readonly BankContext _context;
 
         public UserRepository(BankContext context)

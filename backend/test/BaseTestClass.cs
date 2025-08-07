@@ -23,7 +23,7 @@ namespace Backend.api.test
 
         public void Dispose()
         {
-            CleanupTestData();
+            //CleanupTestData();
         }
 
         private void CleanupTestData()

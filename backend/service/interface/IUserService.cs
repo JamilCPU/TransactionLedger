@@ -13,6 +13,6 @@ namespace Backend.service.intrface
         Task<UserEntity?> GetUserById(int userId);
         Task<List<UserEntity>> GetAllUsers();
 
-        Task Login(UserDto userDto);
+        Task Login(string username, string password);
     }
 }

@@ -22,10 +22,14 @@ namespace Backend.api.controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserDto userDto)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var user = await _userService.Login(userDto);
-            return Ok(user);
+            if (loginDto.Username == null || loginDto.Password == null)
+            {
+                return BadRequest("Username and password are required");
+            }
+            await _userService.Login(loginDto.Username, loginDto.Password);
+            return Ok();
         }
 
         

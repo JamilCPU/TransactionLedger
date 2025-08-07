@@ -4,6 +4,7 @@ using Backend.repository.impl;
 using Backend.data.entities;
 using System.Threading.Tasks;
 using Backend.repository.intrface;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend.service.impl
 {
@@ -13,7 +14,8 @@ namespace Backend.service.impl
         {
             Console.WriteLine("Service: Attemping to CREATE user: " + userDto.Username);
             validateUserDto();
-            UserEntity userEntity = new UserEntity(userDto.Username, userDto.Password, userDto.Email, userDto.Phone);
+            string hashedPassword = _passwordHash.HashPassword(userDto.Username, userDto.Password);
+            UserEntity userEntity = new UserEntity(userDto.Username, hashedPassword, userDto.Email, userDto.Phone);
 
             return await _userRepository.CreateUser(userEntity);
         }
@@ -44,12 +46,26 @@ namespace Backend.service.impl
             return await _userRepository.GetAllUsers();
         }
 
-        public async Task Login(UserDto userDto)
+        public async Task Login(string username, string password)//Come back to check the return type. Maybe a token of some sort?
         {
-            return await _userRepository.Login(userDto);
+
+            var user = await _userRepository.GetUserByUsername(username);
+            if (user == null){
+                throw new Exception("Invalid username or password");
+            }
+                //Purposefully abstract the error messages regardless of if the user exists vs the password is incorrect
+
+            var result = _passwordHash.VerifyHashedPassword(username, user.Password, password);
+            if (result == PasswordVerificationResult.Failed){
+                throw new Exception("Invalid username or password");
+            }
+            string hashedPassword = _passwordHash.HashPassword(username, password);
+            await _userRepository.Login(username, hashedPassword);
+
         }
 
         private readonly IUserRepository _userRepository;
+        private readonly PasswordHasher<string> _passwordHash;
 
         private void validateUserDto()
         {
@@ -59,6 +75,7 @@ namespace Backend.service.impl
         public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            _passwordHash = new PasswordHasher<string>();
         }
     }
 }

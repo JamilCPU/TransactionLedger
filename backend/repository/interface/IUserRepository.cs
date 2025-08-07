@@ -7,5 +7,7 @@ namespace Backend.repository.intrface{
         Task<bool> DeleteUser(int id);
         Task<UserEntity?> GetUserById(int id);
         Task<List<UserEntity>?> GetAllUsers();
+        Task<UserEntity?> GetUserByUsername(string username);
+        Task<UserEntity?> Login(string username, string password);
     }
 }
