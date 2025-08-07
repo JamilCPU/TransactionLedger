@@ -44,6 +44,11 @@ namespace Backend.service.impl
             return await _userRepository.GetAllUsers();
         }
 
+        public async Task Login(UserDto userDto)
+        {
+            return await _userRepository.Login(userDto);
+        }
+
         private readonly IUserRepository _userRepository;
 
         private void validateUserDto()

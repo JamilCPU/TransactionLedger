@@ -12,5 +12,7 @@ namespace Backend.service.intrface
         Task<UserEntity> UpdateUser(int userId, UserDto userDto);
         Task<UserEntity?> GetUserById(int userId);
         Task<List<UserEntity>> GetAllUsers();
+
+        Task Login(UserDto userDto);
     }
 }
