@@ -46,7 +46,7 @@ namespace Backend.service.impl
             return await _userRepository.GetAllUsers();
         }
 
-        public async Task Login(string username, string password)//Come back to check the return type. Maybe a token of some sort?
+        public async Task<SuccessfulLoginDto> Login(string username, string password)
         {
 
             var user = await _userRepository.GetUserByUsername(username);
@@ -59,9 +59,8 @@ namespace Backend.service.impl
             if (result == PasswordVerificationResult.Failed){
                 throw new Exception("Invalid username or password");
             }
-            string hashedPassword = _passwordHash.HashPassword(username, password);
-            await _userRepository.Login(username, hashedPassword);
-
+            
+            return new SuccessfulLoginDto("Login successful", "token", username, password);
         }
 
         private readonly IUserRepository _userRepository;
