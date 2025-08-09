@@ -46,7 +46,7 @@ namespace Backend.service.impl
                 throw new ArgumentException("Account not found");
             }
 
-            account.Balance += (int)amount;
+            account.Balance += (int) amount;
             return await _accountRepository.updateAccount(account);
         }
 
@@ -69,7 +69,7 @@ namespace Backend.service.impl
                 throw new InvalidOperationException("Insufficient funds");
             }
 
-            account.Balance -= (int)amount;
+            account.Balance -= (int) amount;
             return await _accountRepository.updateAccount(account);
         }
 
@@ -94,8 +94,8 @@ namespace Backend.service.impl
                 throw new InvalidOperationException("Insufficient funds for transfer");
             }
 
-            fromAccount.Balance -= (int)amount;
-            toAccount.Balance += (int)amount;
+            fromAccount.Balance -= (int) amount;
+            toAccount.Balance += (int) amount;
 
             await _accountRepository.updateAccount(fromAccount);
             await _accountRepository.updateAccount(toAccount);
