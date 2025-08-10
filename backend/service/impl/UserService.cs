@@ -1,8 +1,6 @@
 using Backend.service.intrface;
 using Backend.api.dtos;
-using Backend.repository.impl;
 using Backend.data.entities;
-using System.Threading.Tasks;
 using Backend.repository.intrface;
 using Microsoft.AspNetCore.Identity;
 
