@@ -28,8 +28,8 @@ namespace Backend.api.controllers
             {
                 return BadRequest("Username and password are required");
             }
-            await _userService.Login(loginDto.Username, loginDto.Password);
-            return Ok();
+            var loginResult = await _userService.Login(loginDto.Username, loginDto.Password);
+            return Ok(loginResult);
         }
 
         
