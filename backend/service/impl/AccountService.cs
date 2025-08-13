@@ -40,14 +40,14 @@ namespace Backend.service.impl
                 throw new ArgumentException("Deposit amount must be greater than 0");
             }
 
-            var account = await _accountRepository.getAccountById(id);
+            var account = await _accountRepository.GetAccountById(id);
             if (account == null)
             {
                 throw new ArgumentException("Account not found");
             }
 
             account.Balance += (int) amount;
-            return await _accountRepository.updateAccount(account);
+            return await _accountRepository.UpdateAccount(account);
         }
 
         public async Task<AccountEntity> Withdraw(int id, decimal amount)
@@ -58,7 +58,7 @@ namespace Backend.service.impl
                 throw new ArgumentException("Withdrawal amount must be greater than 0");
             }
 
-            var account = await _accountRepository.getAccountById(id);
+            var account = await _accountRepository.GetAccountById(id);
             if (account == null)
             {
                 throw new ArgumentException("Account not found");
@@ -70,7 +70,7 @@ namespace Backend.service.impl
             }
 
             account.Balance -= (int) amount;
-            return await _accountRepository.updateAccount(account);
+            return await _accountRepository.UpdateAccount(account);
         }
 
         public async Task Transfer(int fromAccountId, int toAccountId, decimal amount)
@@ -81,8 +81,8 @@ namespace Backend.service.impl
                 throw new ArgumentException("Transfer amount must be greater than 0");
             }
 
-            var fromAccount = await _accountRepository.getAccountById(fromAccountId);
-            var toAccount = await _accountRepository.getAccountById(toAccountId);
+            var fromAccount = await _accountRepository.GetAccountById(fromAccountId);
+            var toAccount = await _accountRepository.GetAccountById(toAccountId);
 
             if (fromAccount == null || toAccount == null)
             {
@@ -97,27 +97,27 @@ namespace Backend.service.impl
             fromAccount.Balance -= (int) amount;
             toAccount.Balance += (int) amount;
 
-            await _accountRepository.updateAccount(fromAccount);
-            await _accountRepository.updateAccount(toAccount);
+            await _accountRepository.UpdateAccount(fromAccount);
+            await _accountRepository.UpdateAccount(toAccount);
         }
 
         public async Task<AccountEntity?> GetAccountById(int id)
         {
             Console.WriteLine("Service: Attempting to GET account: " + id);
-            return await _accountRepository.getAccountById(id);
+            return await _accountRepository.GetAccountById(id);
         }
 
         public async Task<List<AccountEntity>> GetAllAccounts()
         {
             Console.WriteLine("Service: Attempting to GET all accounts");
-            var accounts = await _accountRepository.getAllAccounts();
+            var accounts = await _accountRepository.GetAllAccounts();
             return accounts ?? new List<AccountEntity>();
         }
 
         public async Task DeleteAccount(int id)
         {
             Console.WriteLine("Service: Attempting to DELETE account: " + id);
-            await _accountRepository.deleteAccount(id);
+            await _accountRepository.DeleteAccount(id);
         }
 
         private readonly IAccountRepository _accountRepository;

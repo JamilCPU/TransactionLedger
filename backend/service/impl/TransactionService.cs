@@ -14,7 +14,7 @@ namespace Backend.service.impl
             ValidateTransactionDto(transactionDto);
 
             // First get the account to satisfy the required Account property
-            var account = await _accountRepository.getAccountById(transactionDto.AccountId);
+            var account = await _accountRepository.GetAccountById(transactionDto.AccountId);
             if (account == null)
             {
                 throw new ArgumentException("Account not found");

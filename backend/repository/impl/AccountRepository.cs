@@ -16,7 +16,7 @@ namespace Backend.repository.impl
             return account;
         }
 
-        public async Task<AccountEntity> updateAccount(AccountEntity account)
+        public async Task<AccountEntity> UpdateAccount(AccountEntity account)
         {
             var existingAccount = await _context.Accounts.FindAsync(account.Id);
             if (existingAccount == null) return null;
@@ -29,7 +29,7 @@ namespace Backend.repository.impl
             return existingAccount;
         }
 
-        public async Task deleteAccount(int id)
+        public async Task DeleteAccount(int id)
         {
             var account = await _context.Accounts.FindAsync(id);
             if (account == null) return;
@@ -38,14 +38,14 @@ namespace Backend.repository.impl
             await _context.SaveChangesAsync();
         }
 
-        public async Task<AccountEntity?> getAccountById(int id)
+        public async Task<AccountEntity?> GetAccountById(int id)
         {
             return await _context.Accounts
                 .Include(a => a.User)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<List<AccountEntity>?> getAllAccounts()
+        public async Task<List<AccountEntity>?> GetAllAccounts()
         {
             List<AccountEntity> accountEntities = [];
             accountEntities = await _context.Accounts

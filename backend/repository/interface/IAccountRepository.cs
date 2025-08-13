@@ -3,9 +3,12 @@ namespace Backend.repository.intrface {
     public interface IAccountRepository
     {
         Task<AccountEntity> CreateAccount(AccountEntity account);
-        Task<AccountEntity> updateAccount(AccountEntity account);
-        Task deleteAccount(int id);
-        Task<AccountEntity?> getAccountById(int id);
-        Task<List<AccountEntity>?> getAllAccounts();
+
+        Task<AccountEntity> UpdateAccount(AccountEntity account);
+
+        Task DeleteAccount(int id);
+
+        Task<AccountEntity?> GetAccountById(int id);
+        Task<List<AccountEntity>?> GetAllAccounts();
     }
 }
