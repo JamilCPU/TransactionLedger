@@ -57,12 +57,13 @@ namespace Backend.service.impl
             if (result == PasswordVerificationResult.Failed){
                 throw new Exception("Invalid username or password");
             }
-            
-            return new SuccessfulLoginDto("Login successful", "token", username, password);
+            var token = _jwtService.GenerateToken(user);
+            return new SuccessfulLoginDto("Login successful", token, username, password);
         }
 
         private readonly IUserRepository _userRepository;
         private readonly PasswordHasher<string> _passwordHash;
+        private readonly IJwtService _jwtService;
 
         private void validateUserDto()
         {
@@ -73,6 +74,12 @@ namespace Backend.service.impl
         {
             _userRepository = userRepository;
             _passwordHash = new PasswordHasher<string>();
+        }
+
+        public UserService(IUserRepository userRepository, IJwtService jwtService){
+            _userRepository = userRepository;
+            _passwordHash = new PasswordHasher<string>();
+            _jwtService = jwtService;
         }
     }
 }
