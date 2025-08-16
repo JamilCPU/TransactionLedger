@@ -12,7 +12,6 @@ namespace Backend.repository.impl
         {
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
-            Console.WriteLine(account.ToString()); // debug line
             return account;
         }
 

@@ -17,8 +17,6 @@ namespace Backend
                 {
                     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
                 });
-            Console.WriteLine("blahblahblaj");
-            Console.WriteLine($"Using DB: {Path.GetFullPath("bank.db")}");
 
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
@@ -30,7 +28,6 @@ namespace Backend
 
 
             var dbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "bank.db");
-            Console.WriteLine($"Database {dbPath}");
             builder.Services.AddDbContext<BankContext>(options =>
                 options.UseSqlite($"Data Source={Path.GetFullPath(dbPath)}"));
 
