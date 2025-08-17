@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Backend.api.dtos;
 using Backend.service.intrface;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 
 namespace Backend.api.controllers
