@@ -4,6 +4,10 @@ using Backend.service.intrface;
 using Backend.service.impl;
 using Backend.repository.intrface;
 using Backend.repository.impl;
+using Backend.api.options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Backend
 {
@@ -12,6 +16,38 @@ namespace Backend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            
+            var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
+            if (jwtOptions == null)
+            {
+                jwtOptions = new JwtOptions
+                {
+                    Key = "updatewithkeylater",
+                    Issuer = "TransactionAPI",
+                    Audience = "TransactionClient",
+                    AccessTokenMinutes = 30
+                };
+            }
+            
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+            builder.Services.AddSingleton(jwtOptions);
+            
+            // Add JWT Authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtOptions.Issuer,
+                        ValidAudience = jwtOptions.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key))
+                    };
+                });
+            
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
@@ -21,6 +57,7 @@ namespace Backend
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ITransactionService, TransactionService>();
+            builder.Services.AddScoped<IJwtService, JwtService>();
 
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -38,6 +75,9 @@ namespace Backend
                 var db = scope.ServiceProvider.GetRequiredService<BankContext>();
                 db.Database.Migrate();
             }
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 
