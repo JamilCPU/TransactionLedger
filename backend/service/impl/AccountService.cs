@@ -13,13 +13,7 @@ namespace Backend.service.impl
             Console.WriteLine("Service: Attempting to CREATE account for user: " + accountRequestDto.UserId);
             ValidateAccountRequestDto(accountRequestDto);
             
-            // First get the user to satisfy the required User property
-            var user = await _userRepository.GetUserById(accountRequestDto.UserId);
-            if (user == null)
-            {
-                throw new ArgumentException("User not found");
-            }
-            
+            var user = await _userRepository.GetUserById(accountRequestDto.UserId) ?? throw new ArgumentException("User not found");
             AccountEntity accountEntity = new AccountEntity
             {
                 Balance = (int)accountRequestDto.Amount,
