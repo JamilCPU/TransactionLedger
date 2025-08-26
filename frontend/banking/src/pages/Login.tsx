@@ -1,6 +1,11 @@
 import React from 'react';
 
 const Login: React.FC = () => {
+
+    const tryLogin = () => {
+        
+    }
+
     return (
         <div className="flex flex-col justify-center min-h-[70vh] gap-4">
             <form className="flex flex-col justify-center gap-4">
