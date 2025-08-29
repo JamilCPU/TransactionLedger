@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -24,9 +25,14 @@ const Login: React.FC = () => {
                 },
                 body: JSON.stringify({ username, password })
             });
-            console.log(response);
+            if(response.status === 200){
+                toast.success('test login')
+            }else{
+                toast.error(`${response.statusText} error has occurred`)
+            }
         } catch (error) {
             console.error('An Unexpected Error has occurred', error);
+            toast.error('An Unexpected Error has occurred')
         } finally {
             setIsLoading(false);
         }

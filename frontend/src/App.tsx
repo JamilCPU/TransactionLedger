@@ -5,6 +5,7 @@ import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -19,6 +20,18 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <Router>
         <Layout>
           <Routes>
