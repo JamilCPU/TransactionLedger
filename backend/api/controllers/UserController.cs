@@ -11,57 +11,93 @@ namespace Backend.api.controllers
         [HttpPost("new")]
         public async Task<IActionResult> CreateUser([FromBody] UserDto userDto)
         {
-            if (userDto.Username == null || userDto.Password == null || userDto.Email == null || userDto.Phone == null)
+            try
             {
-                return BadRequest("Username, password, email, and phone are required");
+                if (userDto.Username == null || userDto.Password == null || userDto.Email == null || userDto.Phone == null)
+                {
+                    return BadRequest("Username, password, email, and phone are required");
+                }
+                var user = await _userService.CreateUser(userDto);
+                return Ok(user);
             }
-            var user = await _userService.CreateUser(userDto);
-            return Ok(user);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"CreateUser error: {ex.Message}");
+                return StatusCode(500, "An error occurred while creating the user");
+            }
         }
 
         [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUser(int userId, [FromBody] UserDto userDto)
         {
-            if (userDto.Username == null || userDto.Password == null || userDto.Email == null || userDto.Phone == null)
+            try
             {
-                return BadRequest("Username, password, email, and phone are required");
+                if (userDto.Username == null || userDto.Password == null || userDto.Email == null || userDto.Phone == null)
+                {
+                    return BadRequest("Username, password, email, and phone are required");
+                }
+                var updatedUser = await _userService.UpdateUser(userId, userDto);
+                return Ok(updatedUser);
             }
-            var updatedUser = await _userService.UpdateUser(userId, userDto);
-            return Ok(updatedUser);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"UpdateUser error: {ex.Message}");
+                return StatusCode(500, "An error occurred while updating the user");
+            }
         }
 
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUser(int userId)
         {
-            if (userId == null)
+            try
             {
-                return BadRequest("Error: User Id is Null!");
+                if (userId == null)
+                {
+                    return BadRequest("Error: User Id is Null!");
+                }
+                await _userService.DeleteUser(userId);
+                return Ok();
             }
-            await _userService.DeleteUser(userId);
-            return Ok();
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DeleteUser error: {ex.Message}");
+                return StatusCode(500, "An error occurred while deleting the user");
+            }
         }
 
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetUserById(int userId)
         {
-            var user = await _userService.GetUserById(userId);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = await _userService.GetUserById(userId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(user);
             }
-            return Ok(user);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetUserById error: {ex.Message}");
+                return StatusCode(500, "An error occurred while retrieving the user");
+            }
         }
 
         [HttpGet("getAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await _userService.GetAllUsers();
-            return Ok(users);
+            try
+            {
+                var users = await _userService.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllUsers error: {ex.Message}");
+                return StatusCode(500, "An error occurred while retrieving users");
+            }
         }
-
-
-
-
 
         private readonly IUserService _userService;
         public UserController(IUserService userService)

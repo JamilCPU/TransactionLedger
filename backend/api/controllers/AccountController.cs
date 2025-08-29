@@ -11,74 +11,130 @@ namespace Backend.api.controllers
         [HttpPost("new")]
         public async Task<IActionResult> CreateAccount([FromBody] AccountRequestDto accountRequestDto)
         {
-            if (accountRequestDto.Amount < 0)
+            try
             {
-                return BadRequest("Initial amount cannot be negative");
+                if (accountRequestDto.Amount < 0)
+                {
+                    return BadRequest("Initial amount cannot be negative");
+                }
+                var account = await _accountService.CreateAccount(accountRequestDto);
+                return Ok(account);
             }
-            var account = await _accountService.CreateAccount(accountRequestDto);
-            return Ok(account);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"CreateAccount error: {ex.Message}");
+                return StatusCode(500, "An error occurred while creating the account");
+            }
         }
 
         [HttpPost("{id}/deposit")]
         public async Task<IActionResult> Deposit(int id, [FromBody] AccountRequestDto accountRequestDto)
         {
-            if (accountRequestDto.Amount <= 0)
+            try
             {
-                return BadRequest("Deposit amount must be greater than 0");
+                if (accountRequestDto.Amount <= 0)
+                {
+                    return BadRequest("Deposit amount must be greater than 0");
+                }
+                var updatedAccount = await _accountService.Deposit(id, accountRequestDto.Amount);
+                return Ok(updatedAccount);
             }
-            var updatedAccount = await _accountService.Deposit(id, accountRequestDto.Amount);
-            return Ok(updatedAccount);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Deposit error: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing the deposit");
+            }
         }
 
         [HttpPost("{id}/withdraw")]
         public async Task<IActionResult> Withdraw(int id, [FromBody] AccountRequestDto accountRequestDto)
         {
-            if (accountRequestDto.Amount <= 0)
+            try
             {
-                return BadRequest("Withdrawal amount must be greater than 0");
+                if (accountRequestDto.Amount <= 0)
+                {
+                    return BadRequest("Withdrawal amount must be greater than 0");
+                }
+                var updatedAccount = await _accountService.Withdraw(id, accountRequestDto.Amount);
+                return Ok(updatedAccount);
             }
-            var updatedAccount = await _accountService.Withdraw(id, accountRequestDto.Amount);
-            return Ok(updatedAccount);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Withdraw error: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing the withdrawal");
+            }
         }
 
         [HttpPost("transfer")]
         public async Task<IActionResult> Transfer([FromBody] TransferRequestDto transferRequestDto)
         {
-            if (transferRequestDto.Amount <= 0)
+            try
             {
-                return BadRequest("Transfer amount must be greater than 0");
+                if (transferRequestDto.Amount <= 0)
+                {
+                    return BadRequest("Transfer amount must be greater than 0");
+                }
+                if (transferRequestDto.FromAccountId == transferRequestDto.ToAccountId)
+                {
+                    return BadRequest("Cannot transfer to the same account");
+                }
+                await _accountService.Transfer(transferRequestDto.FromAccountId, transferRequestDto.ToAccountId, transferRequestDto.Amount);
+                return Ok();
             }
-            if (transferRequestDto.FromAccountId == transferRequestDto.ToAccountId)
+            catch (Exception ex)
             {
-                return BadRequest("Cannot transfer to the same account");
+                Console.WriteLine($"Transfer error: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing the transfer");
             }
-            await _accountService.Transfer(transferRequestDto.FromAccountId, transferRequestDto.ToAccountId, transferRequestDto.Amount);
-            return Ok();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAccountById(int id)
         {
-            var account = await _accountService.GetAccountById(id);
-            if (account == null)
+            try
             {
-                return NotFound();
+                var account = await _accountService.GetAccountById(id);
+                if (account == null)
+                {
+                    return NotFound();
+                }
+                return Ok(account);
             }
-            return Ok(account);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAccountById error: {ex.Message}");
+                return StatusCode(500, "An error occurred while retrieving the account");
+            }
         }
 
         [HttpGet("getAllAccounts")]
         public async Task<IActionResult> GetAllAccounts()
         {
-            var accounts = await _accountService.GetAllAccounts();
-            return Ok(accounts);
+            try
+            {
+                var accounts = await _accountService.GetAllAccounts();
+                return Ok(accounts);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllAccounts error: {ex.Message}");
+                return StatusCode(500, "An error occurred while retrieving accounts");
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAccount(int id)
         {
-            await _accountService.DeleteAccount(id);
-            return Ok();
+            try
+            {
+                await _accountService.DeleteAccount(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DeleteAccount error: {ex.Message}");
+                return StatusCode(500, "An error occurred while deleting the account");
+            }
         }
 
         private readonly IAccountService _accountService;
@@ -87,6 +143,4 @@ namespace Backend.api.controllers
             _accountService = accountService;
         }
     }
-
-
 }

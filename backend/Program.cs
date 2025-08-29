@@ -16,7 +16,19 @@ namespace Backend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowFrontend",
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:5173")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod()
+                                      .AllowCredentials();
+                                  });
+            });
+
             var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
             if (jwtOptions == null)
             {
@@ -28,10 +40,10 @@ namespace Backend
                     AccessTokenMinutes = 30
                 };
             }
-            
+
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
             builder.Services.AddSingleton(jwtOptions);
-            
+
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -46,7 +58,7 @@ namespace Backend
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key))
                     };
                 });
-            
+
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
@@ -74,6 +86,9 @@ namespace Backend
                 var db = scope.ServiceProvider.GetRequiredService<BankContext>();
                 db.Database.Migrate();
             }
+
+            app.UseCors("AllowFrontend");
+
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const Login: React.FC = () => {
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    const frontendUrl = import.meta.env.VITE_FRONTEND_URL;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -17,6 +18,10 @@ const Login: React.FC = () => {
         try {
             const response = await fetch(baseUrl + '/api/auth/login', {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': frontendUrl
+                },
                 body: JSON.stringify({ username, password })
             });
             console.log(response);
