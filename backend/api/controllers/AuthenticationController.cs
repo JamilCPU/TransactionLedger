@@ -23,6 +23,8 @@ namespace Backend.api.controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
+            Console.WriteLine(loginDto.Username);
+            Console.WriteLine(loginDto.Password);
             if (loginDto.Username == null || loginDto.Password == null)
             {
                 return BadRequest("Username and password are required");
