@@ -79,23 +79,26 @@ namespace Backend.api.test
 
         protected async Task<UserEntity> CreateTestUser(string username = null)
         {
-            var userDto = new 
-            { 
-                Username = username ?? $"testuser_{Guid.NewGuid().ToString("N")[..8]}", 
-                Password = "password", 
-                Email = $"test{Guid.NewGuid().ToString("N")[..8]}@gmail.com", 
-                Phone = "1234567890" 
+            var userDto = new
+            {
+                Username = username ?? $"testuser_{Guid.NewGuid().ToString("N")[..8]}",
+                Password = "password",
+                Email = $"test{Guid.NewGuid().ToString("N")[..8]}@gmail.com",
+                Phone = "1234567890"
             };
-            
+            Console.WriteLine(userDto.Username);
+            Console.WriteLine(userDto.Password);
+            Console.WriteLine(userDto.Email);
+            Console.WriteLine(userDto.Phone);
             var response = await _client.PostAsJsonAsync("/api/users/new", userDto);
             response.EnsureSuccessStatusCode();
             var user = await response.Content.ReadFromJsonAsync<UserEntity>();
-            
+
             if (user != null)
             {
                 _createdUserIds.Add(user.Id);
             }
-            
+
             return user;
         }
 
@@ -103,23 +106,23 @@ namespace Backend.api.test
         {
             var user = userId.HasValue ? null : await CreateTestUser();
             var actualUserId = userId ?? user.Id;
-            
-            var accountDto = new 
-            { 
-                Amount = initialAmount, 
-                UserId = actualUserId, 
-                AccountType = AccountEntity.AccountTypeEnum.CHECKING 
+
+            var accountDto = new
+            {
+                Amount = initialAmount,
+                UserId = actualUserId,
+                AccountType = AccountEntity.AccountTypeEnum.CHECKING
             };
-            
+
             var response = await _client.PostAsJsonAsync("/api/accounts/new", accountDto);
             response.EnsureSuccessStatusCode();
             var account = await response.Content.ReadFromJsonAsync<AccountEntity>();
-            
+
             if (account != null)
             {
                 _createdAccountIds.Add(account.Id);
             }
-            
+
             return account;
         }
 
@@ -127,24 +130,24 @@ namespace Backend.api.test
         {
             var account = accountId.HasValue ? null : await CreateTestAccount();
             var actualAccountId = accountId ?? account.Id;
-            
-            var transactionDto = new 
-            { 
-                Amount = amount, 
-                AccountId = actualAccountId, 
-                TransactionType = TransactionEntity.TransactionTypeEnum.DEPOSIT 
+
+            var transactionDto = new
+            {
+                Amount = amount,
+                AccountId = actualAccountId,
+                TransactionType = TransactionEntity.TransactionTypeEnum.DEPOSIT
             };
-            
+
             var response = await _client.PostAsJsonAsync("/api/transactions/new", transactionDto);
             response.EnsureSuccessStatusCode();
             var transaction = await response.Content.ReadFromJsonAsync<TransactionEntity>();
-            
+
             if (transaction != null)
             {
                 _createdTransactionIds.Add(transaction.Id);
             }
-            
+
             return transaction;
         }
     }
-} 
+}
