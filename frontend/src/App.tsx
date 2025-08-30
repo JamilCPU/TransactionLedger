@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 
@@ -36,7 +37,7 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Login />} />
-            {/* Add more routes here as we create more pages */}
+            <Route path="/register" element={<Register />} />
             <Route path="/users" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Users Page - Coming Soon</h2></div>} />
             <Route path="/accounts" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Accounts Page - Coming Soon</h2></div>} />
             <Route path="/transactions" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Transactions Page - Coming Soon</h2></div>} />

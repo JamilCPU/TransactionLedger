@@ -37,4 +37,12 @@
   .form-label {
     @apply block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200;
   }
+
+  .underline{
+    text-decoration: underline;
+  }
+
+  .small-text {
+    font-size: 14px;
+  }
 }
