@@ -34,7 +34,6 @@ const Register: React.FC = () => {
             return;
         }
         setIsLoading(true);
-        console.log(username, password, email, phone);
         try {
             const response = await fetch(baseUrl + '/api/auth/register', {
                 method: 'POST',
@@ -44,7 +43,6 @@ const Register: React.FC = () => {
                 },
                 body: JSON.stringify({ username, password, email, phone })
             });
-            console.log(response);
             if(response.status === 200){
                 toast.success('User has been successfully created!')
                 navigate('/login', {state: {username: username}});

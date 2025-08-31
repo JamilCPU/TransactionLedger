@@ -5,10 +5,8 @@ const Login: React.FC = () => {
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL;
     const [username, setUsername] = useState(useLocation().state?.username || '');
-    console.log(username);
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
     const navigate = useNavigate();
 
 
@@ -23,10 +21,11 @@ const Login: React.FC = () => {
                 },
                 body: JSON.stringify({ username, password })
             });
-            console.log(response);
             if(response.status !== 200){
                 toast.error(`${response.statusText} error has occurred`)
             }else{
+                const loginInfo = await response.json();
+                console.log(loginInfo);
                 navigate('/dashboard');
             }
         } catch (error) {
