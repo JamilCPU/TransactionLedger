@@ -45,11 +45,11 @@ const Login: React.FC = () => {
             }}>
                 <div className="mx-auto">
                     <h1 className="text-large font-bold mb-2">Username</h1>
-                    <input type="text" className="border-2 border-gray-300 rounded-md" onChange={(input) => setUsername(input.target.value)} />
+                    <input type="text" className="border-2 border-gray-300 rounded-md text-black pl-1" onChange={(input) => setUsername(input.target.value)} />
                 </div>
                 <div className="mx-auto">
                     <h1 className="text-large font-bold mb-2">Password</h1>
-                    <input type="password" className="border-2 border-gray-300 rounded-md" onChange={(input) => setPassword(input.target.value)} />
+                    <input type="password" className="border-2 border-gray-300 rounded-md text-black pl-1" onChange={(input) => setPassword(input.target.value)} />
                 </div>
                 <button className="bg-blue-500 text-white p-2 rounded-md w-28 mx-auto mt-6 mb-5" type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Login'}</button>
             </form>
