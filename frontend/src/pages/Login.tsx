@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
 const Login: React.FC = () => {
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL;
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(useLocation().state?.username || '');
+    console.log(username);
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -45,7 +45,7 @@ const Login: React.FC = () => {
             }}>
                 <div className="mx-auto">
                     <h1 className="text-large font-bold mb-2">Username</h1>
-                    <input type="text" className="border-2 border-gray-300 rounded-md text-black pl-1" onChange={(input) => setUsername(input.target.value)} />
+                    <input type="text" className="border-2 border-gray-300 rounded-md text-black pl-1" onChange={(input) => setUsername(input.target.value)} value={username} />
                 </div>
                 <div className="mx-auto">
                     <h1 className="text-large font-bold mb-2">Password</h1>
