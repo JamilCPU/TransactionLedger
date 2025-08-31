@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Register: React.FC = () => {
@@ -10,6 +10,8 @@ const Register: React.FC = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
 
     const validateForm = () => {
         if(username === '' || password === '' || email === '' || phone === ''){
@@ -32,6 +34,7 @@ const Register: React.FC = () => {
             return;
         }
         setIsLoading(true);
+        console.log(username, password, email, phone);
         try {
             const response = await fetch(baseUrl + '/api/auth/register', {
                 method: 'POST',
@@ -44,6 +47,7 @@ const Register: React.FC = () => {
             console.log(response);
             if(response.status === 200){
                 toast.success('User has been successfully created!')
+                navigate('/login');
             }else{
                 toast.error(`${response.statusText} error has occurred`)
             }
@@ -79,7 +83,7 @@ const Register: React.FC = () => {
                     <h1 className="text-large font-bold mb-2">Phone</h1>
                     <input type="text" className="border-2 border-gray-300 rounded-md text-black pl-1" onChange={(input) => setPhone(input.target.value)} />
                 </div>
-                <button className="bg-blue-500 text-white p-2 rounded-md w-28 mx-auto mt-6 mb-6" type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Login'}</button>
+                <button className="bg-blue-500 text-white p-2 rounded-md w-28 mx-auto mt-6 mb-6" type="submit" disabled={isLoading}>{isLoading ? 'Registering...' : 'Register'}</button>
             </form>
 
             <div className="flex flex-col justify-center gap-4 mt-0">

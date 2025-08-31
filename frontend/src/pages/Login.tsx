@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
@@ -7,13 +7,10 @@ const Login: React.FC = () => {
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-    const disableLogin = () => {
-
-    }
 
     const tryLogin = async () => {
         setIsLoading(true);
@@ -26,8 +23,11 @@ const Login: React.FC = () => {
                 },
                 body: JSON.stringify({ username, password })
             });
+            console.log(response);
             if(response.status !== 200){
                 toast.error(`${response.statusText} error has occurred`)
+            }else{
+                navigate('/dashboard');
             }
         } catch (error) {
             console.error('An Unexpected Error has occurred', error);
