@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Register: React.FC = () => {
@@ -56,30 +57,34 @@ const Register: React.FC = () => {
 
     return (
         <div className="flex flex-col justify-center gap-4 mb-0">
-            <form className="flex flex-col justify-center gap-4" onSubmit={(form) => {
+            <form className="flex flex-col justify-center gap-4 border w-1/2 mx-auto" onSubmit={(form) => {
                 form.preventDefault();
                 tryRegister();
             }}>
                 <div className="mx-auto">
-                    <h1 className="text-2xl font-bold mb-2">Username</h1>
-                    <input type="text" className="border-2 border-gray-300 rounded-md p-2" onChange={(input) => setUsername(input.target.value)} />
+                    <h1 className="text-large font-bold mb-2">Username</h1>
+                    <input type="text" className="border-2 border-gray-300 rounded-md" onChange={(input) => setUsername(input.target.value)} />
                 </div>
                 <div className="mx-auto">
-                    <h1 className="text-2xl font-bold mb-2">Password</h1>
-                    <input type="password" className="border-2 border-gray-300 rounded-md p-2" onChange={(input) => setPassword(input.target.value)} />
+                    <h1 className="text-large font-bold mb-2">Password</h1>
+                    <input type="password" className="border-2 border-gray-300 rounded-md" onChange={(input) => setPassword(input.target.value)} />
                 </div>
 
                 <div className="mx-auto">
-                    <h1 className="text-2xl font-bold mb-2">Email</h1>
-                    <input type="email" className="border-2 border-gray-300 rounded-md p-2" onChange={(input) => setEmail(input.target.value)} />
+                    <h1 className="text-large font-bold mb-2">Email</h1>
+                    <input type="email" className="border-2 border-gray-300 rounded-md" onChange={(input) => setEmail(input.target.value)} />
                 </div>
 
                 <div className="mx-auto">
-                    <h1 className="text-2xl font-bold mb-2">Phone</h1>
-                    <input type="text" className="border-2 border-gray-300 rounded-md p-2" onChange={(input) => setPhone(input.target.value)} />
+                    <h1 className="text-large font-bold mb-2">Phone</h1>
+                    <input type="text" className="border-2 border-gray-300 rounded-md" onChange={(input) => setPhone(input.target.value)} />
                 </div>
-                <button className="bg-blue-500 text-white p-2 rounded-md w-28 mx-auto mt-6" type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Login'}</button>
+                <button className="bg-blue-500 text-white p-2 rounded-md w-28 mx-auto mt-6 mb-6" type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Login'}</button>
             </form>
+
+            <div className="flex flex-col justify-center gap-4 mt-0">
+                <h5 className="justify-center mx-auto font-bold underline small-text"><Link to="/login">Have an account already? Login here!</Link></h5>            
+            </div>
         </div>
     )
 }

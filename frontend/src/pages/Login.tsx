@@ -38,20 +38,20 @@ const Login: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col justify-center gap-4 mb-0">
-            <form className="flex flex-col justify-center gap-4" onSubmit={(form) => {
+        <div className="flex flex-col justify-center gap-4 mb-0 w-1/2 mx-auto">
+            <form className="flex flex-col justify-center gap-4 border" onSubmit={(form) => {
                 form.preventDefault();
                 tryLogin();
             }}>
                 <div className="mx-auto">
-                    <h1 className="text-2xl font-bold mb-2">Username</h1>
-                    <input type="text" className="border-2 border-gray-300 rounded-md p-2" onChange={(input) => setUsername(input.target.value)} />
+                    <h1 className="text-large font-bold mb-2">Username</h1>
+                    <input type="text" className="border-2 border-gray-300 rounded-md" onChange={(input) => setUsername(input.target.value)} />
                 </div>
                 <div className="mx-auto">
-                    <h1 className="text-2xl font-bold mb-2">Password</h1>
-                    <input type="password" className="border-2 border-gray-300 rounded-md p-2" onChange={(input) => setPassword(input.target.value)} />
+                    <h1 className="text-large font-bold mb-2">Password</h1>
+                    <input type="password" className="border-2 border-gray-300 rounded-md" onChange={(input) => setPassword(input.target.value)} />
                 </div>
-                <button className="bg-blue-500 text-white p-2 rounded-md w-28 mx-auto mt-6" type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Login'}</button>
+                <button className="bg-blue-500 text-white p-2 rounded-md w-28 mx-auto mt-6 mb-5" type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Login'}</button>
             </form>
 
             <div className="flex flex-col justify-center gap-4 mt-0">
