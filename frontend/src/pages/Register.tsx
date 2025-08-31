@@ -49,7 +49,8 @@ const Register: React.FC = () => {
                 toast.success('User has been successfully created!')
                 navigate('/login');
             }else{
-                toast.error(`${response.statusText} error has occurred`)
+                const errorText = await response.text();
+                toast.error(errorText || `${response.statusText} error has occurred`);
             }
         } catch (error) {
             console.error('An Unexpected Error has occurred', error);

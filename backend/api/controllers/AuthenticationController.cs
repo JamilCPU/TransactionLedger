@@ -23,8 +23,12 @@ namespace Backend.api.controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Register error: {ex.Message}");
-                return StatusCode(500, "An error occurred during registration");
+                if (ex.Message == "This username is already taken.")
+                {
+                    return BadRequest("This username is already taken.");
+                }else{
+                    return StatusCode(500, "An error occurred during registration");
+                }
             }
         }
 

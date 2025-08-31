@@ -12,6 +12,13 @@ namespace Backend.service.impl
         {
             Console.WriteLine("Service: Attemping to CREATE user: " + userDto.Username);
             validateUserDto();
+
+            var user = await _userRepository.GetUserByUsername(userDto.Username);
+            if (user != null)
+            {
+                throw new Exception("This username is already taken.");
+            }
+
             string hashedPassword = _passwordHash.HashPassword(userDto.Username, userDto.Password);
             UserEntity userEntity = new UserEntity(userDto.Username, hashedPassword, userDto.Email, userDto.Phone);
 
