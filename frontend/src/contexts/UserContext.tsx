@@ -1,9 +1,13 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, type ReactNode } from 'react';
 
-const UserContext = createContext(null);
+type UserContextType = {
+  user: any | null;
+  setUser: (user: any) => void;
+};
+const UserContext = createContext<UserContextType | null>(null);
 
-export function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+export function UserProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState();
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
@@ -13,5 +17,9 @@ export function UserProvider({ children }) {
 }
 
 export function useUser() {
-  return useContext(UserContext);
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error('useUser must be used within a UserProvider');
+  }
+  return context;
 }
