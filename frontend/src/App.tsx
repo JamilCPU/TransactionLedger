@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
+import { UserProvider } from './contexts/UserContext';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -39,9 +40,11 @@ function App() {
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <UserProvider>
             <Route path="/users" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Users Page - Coming Soon</h2></div>} />
             <Route path="/accounts" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Accounts Page - Coming Soon</h2></div>} />
             <Route path="/transactions" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Transactions Page - Coming Soon</h2></div>} />
+            </UserProvider>
           </Routes>
         </Layout>
       </Router>
