@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useUser } from '../contexts/UserContext';
+
 const Login: React.FC = () => {
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL;
@@ -8,7 +10,7 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-
+    const { setUser } = useUser();
 
     const tryLogin = async () => {
         setIsLoading(true);
@@ -26,6 +28,7 @@ const Login: React.FC = () => {
             }else{
                 const loginInfo = await response.json();
                 console.log(loginInfo);
+                localStorage.setItem('token', loginInfo.jwtToken);
                 navigate('/dashboard');
             }
         } catch (error) {

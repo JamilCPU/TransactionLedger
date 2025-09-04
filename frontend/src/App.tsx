@@ -36,16 +36,19 @@ function App() {
       />
       <Router>
         <Layout>
+        <UserProvider>
+
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <UserProvider>
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/users" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Users Page - Coming Soon</h2></div>} />
             <Route path="/accounts" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Accounts Page - Coming Soon</h2></div>} />
             <Route path="/transactions" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Transactions Page - Coming Soon</h2></div>} />
-            </UserProvider>
           </Routes>
+          </UserProvider>
+
         </Layout>
       </Router>
     </QueryClientProvider>

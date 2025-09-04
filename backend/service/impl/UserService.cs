@@ -45,6 +45,12 @@ namespace Backend.service.impl
             return await _userRepository.GetUserById(userId);
         }
 
+        public async Task<UserEntity?> GetUserByUsername(string username)
+        {
+            Console.WriteLine("Service: Attempting to GET user: " + username);
+            return await _userRepository.GetUserByUsername(username);
+        }
+
         public async Task<List<UserEntity>> GetAllUsers()
         {
             Console.WriteLine("Service: Attempting to GET all users");

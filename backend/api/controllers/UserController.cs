@@ -84,6 +84,25 @@ namespace Backend.api.controllers
             }
         }
 
+         [HttpGet("{username}")]
+        public async Task<IActionResult> GetUserByUsername(string username)
+        {
+            try
+            {
+                var user = await _userService.GetUserByUsername(username);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetUserByUsername error: {ex.Message}");
+                return StatusCode(500, "An error occurred while retrieving the user");
+            }
+        }
+
         [HttpGet("getAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
