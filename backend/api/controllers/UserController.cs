@@ -85,16 +85,18 @@ namespace Backend.api.controllers
         }
 
          [HttpGet("info/{username}")]
-        public async Task<IActionResult> GetUserByUsername(string username)
+        public async Task<IActionResult> GetUserByUsername(string userName)
         {
             try
             {
-                var user = await _userService.GetUserByUsername(username);
+                var user = await _userService.GetUserByUsername(userName);
                 if (user == null)
                 {
                     return NotFound();
                 }
-                return Ok(user);
+                var userInfo = new UserInfoDto(user.Id, user.Username, user.Email, user.Phone, user.Accounts);
+                
+                return Ok(userInfo);
             }
             catch (Exception ex)
             {

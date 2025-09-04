@@ -28,14 +28,6 @@ namespace Backend.data.entities
             this.Accounts = accounts;
         }
 
-        public UserEntity(string username, string email, string phone, List<AccountEntity> accounts)
-        {
-            this.Username = username;
-            this.Email = email;
-            this.Phone = phone;
-            this.Accounts = accounts;
-        }
-
         public UserEntity()
         {
             

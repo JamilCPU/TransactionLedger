@@ -45,6 +45,7 @@ const Register: React.FC = () => {
             });
             if(response.status === 200){
                 toast.success('User has been successfully created!')
+                
                 navigate('/login', {state: {username: username}});
             }else{
                 const errorText = await response.text();

@@ -12,6 +12,10 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <h1>Dashboard</h1>
+      <h2>Welcome, {user?.username}</h2>
+      <h2>Email: {user?.email}</h2>
+      <h2>Phone: {user?.phone}</h2>
+      <h2>Accounts: {user?.accounts.length}</h2>
     </div>
   );
 };

@@ -24,6 +24,8 @@ const Login: React.FC = () => {
                 body: JSON.stringify({ username, password })
             });
             if(response.status !== 200){
+                console.log(username);
+                console.log(password);
                 toast.error(`${response.statusText} error has occurred`)
             }else{
                 const loginInfo = await response.json();
@@ -37,6 +39,7 @@ const Login: React.FC = () => {
                     }
                 });
                 const user = await userInfo.json();
+                setUser(user);
                 console.log(user);
                 setUser(user);
                 navigate('/dashboard');

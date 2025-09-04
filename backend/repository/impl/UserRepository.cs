@@ -53,10 +53,7 @@ namespace Backend.repository.impl
 
         public async Task<UserEntity?> GetUserByUsername(string username)
         {
-            return await _context.Users
-            .Where(u => u.Username == username)
-            .Select(u => new UserEntity(u.Username, u.Email, u.Phone, u.Accounts))
-            .FirstOrDefaultAsync();
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
 
         public async Task<UserEntity?> Login(string username, string password)
