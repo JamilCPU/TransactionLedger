@@ -84,7 +84,7 @@ namespace Backend.api.controllers
             }
         }
 
-         [HttpGet("{username}")]
+         [HttpGet("info/{username}")]
         public async Task<IActionResult> GetUserByUsername(string username)
         {
             try

@@ -55,7 +55,7 @@ namespace Backend.repository.impl
         {
             return await _context.Users
             .Where(u => u.Username == username)
-            .Select(u => new UserEntity(u.Username, u.Password, u.Email, u.Phone, u.Accounts))
+            .Select(u => new UserEntity(u.Username, u.Email, u.Phone, u.Accounts))
             .FirstOrDefaultAsync();
         }
 
