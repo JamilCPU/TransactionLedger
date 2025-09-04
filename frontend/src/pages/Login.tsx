@@ -29,6 +29,16 @@ const Login: React.FC = () => {
                 const loginInfo = await response.json();
                 console.log(loginInfo);
                 localStorage.setItem('token', loginInfo.jwtToken);
+                const userInfo = await fetch(baseUrl + '/api/users/info/' + loginInfo.username, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': frontendUrl
+                    }
+                });
+                const user = await userInfo.json();
+                console.log(user);
+                setUser(user);
                 navigate('/dashboard');
             }
         } catch (error) {
