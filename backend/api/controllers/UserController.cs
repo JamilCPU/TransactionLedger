@@ -94,6 +94,7 @@ namespace Backend.api.controllers
                 {
                     return NotFound();
                 }
+                //Pass user info to the client, purposefully not passing the password
                 var userInfo = new UserInfoDto(user.Id, user.Username, user.Email, user.Phone, user.Accounts);
                 
                 return Ok(userInfo);
