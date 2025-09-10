@@ -7,7 +7,7 @@ import Register from './pages/Register';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from './contexts/UserContext';
-
+import LoggedOutLayout from './components/layout/LoggedOutLayout';
 // Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,11 +37,13 @@ function AppContent() {
           </Routes>
         </Layout>
       ) : (
+        <LoggedOutLayout>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
+        </LoggedOutLayout>
       )}
     </UserProvider>
   );
