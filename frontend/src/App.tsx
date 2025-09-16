@@ -8,6 +8,7 @@ import './App.css';
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from './contexts/UserContext';
 import LoggedOutLayout from './components/layout/LoggedOutLayout';
+import Accounts from './pages/Accounts';
 // Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,8 +32,7 @@ function AppContent() {
         <Layout>
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/users" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Users Page - Coming Soon</h2></div>} />
-            <Route path="/accounts" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Accounts Page - Coming Soon</h2></div>} />
+            <Route path="/accounts" element={<Accounts />} />
             <Route path="/transactions" element={<div className="text-center py-12"><h2 className="text-2xl font-bold">Transactions Page - Coming Soon</h2></div>} />
           </Routes>
         </Layout>
