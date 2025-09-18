@@ -1,10 +1,30 @@
 import { useState } from "react";
 import Card from "../components/ui/Card";
 import { useUser } from "../contexts/UserContext";
+import { toast } from "react-toastify";
+
 
 const Accounts = () => {
     const { user } = useUser();
     const [createAccount, setCreateAccount] = useState(false);
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    const frontendUrl = import.meta.env.VITE_FRONTEND_URL;
+    const [accountType, setAccountType] = useState('Checking');
+    const createNewAccount = async () => {
+        try {
+            const response = await fetch(baseUrl + '/api/accounts/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': frontendUrl
+                },
+                body: JSON.stringify({ amount: 0, userId: user?.id, accountType: accountType})
+            });
+        }catch(error){
+            console.error('An Unexpected Error has occurred', error);
+            toast.error('An Unexpected Error has occurred')
+        }
+    }
     
     return (
         user?.accounts ? (
