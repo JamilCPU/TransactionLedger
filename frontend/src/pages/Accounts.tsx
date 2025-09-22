@@ -2,6 +2,7 @@ import { useState } from "react";
 import Card from "../components/ui/Card";
 import { useUser } from "../contexts/UserContext";
 import { toast } from "react-toastify";
+import Input from "../components/ui/Input";
 
 
 const Accounts = () => {
@@ -60,12 +61,14 @@ const Accounts = () => {
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-6">
             <div className="grid grid-cols-1">
                 {user.accounts.map((account) => (
+                    <div>
                     <Card className="bg-white dark:bg-gray-800 shadow-lg">
                         <div className="p-6">
                             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{account.accountType}</h2>
                             <p className="text-gray-600 dark:text-gray-400">{account.accountNumber}</p>
                         </div>
                     </Card>
+                        </div>
                 ))}
             </div>
         </div>
