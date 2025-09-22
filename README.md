@@ -27,8 +27,9 @@ On the other terminal enter:
 Ordinarily this would be enough to get things running but you'll also need to create a .env file within the frontend directory.
 This should tell the application where to point its URLs. The contents should look something like this
 
-VITE_API_BASE_URL = http://localhost:5000
-VITE_FRONTEND_URL = http://localhost:5173;
+VITE_API_BASE_URL = http://localhost:5000 \
+VITE_FRONTEND_URL = http://localhost:5173 \
 
 
 Once you do that, attempt to access the frontend to run the application as intended!
+
