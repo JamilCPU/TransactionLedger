@@ -6,7 +6,6 @@ import Card from '../components/ui/Card';
 const Dashboard: React.FC = () => {
   const { user } = useUser();
 
-
   const getTotalBalance = () => {
     if (!user?.accounts) return 0;
     return user.accounts.reduce((total, account) => total + account.balance, 0);
