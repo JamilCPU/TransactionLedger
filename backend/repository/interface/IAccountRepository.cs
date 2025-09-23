@@ -6,6 +6,7 @@ namespace Backend.repository.intrface {
 
         Task<AccountEntity> UpdateAccount(AccountEntity account);
 
+        Task<List<AccountEntity>?> GetAllAccountsByUserId(int userId);
         Task DeleteAccount(int id);
 
         Task<AccountEntity?> GetAccountById(int id);

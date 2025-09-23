@@ -53,7 +53,10 @@ namespace Backend.repository.impl
 
         public async Task<UserEntity?> GetUserByUsername(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var accounts = await _accountRepository.GetAllAccountsByUserId(user.Id);
+            user.Accounts = accounts;
+            return user;
         }
 
         public async Task<UserEntity?> Login(string username, string password)
@@ -63,10 +66,11 @@ namespace Backend.repository.impl
 
 
         private readonly BankContext _context;
-
-        public UserRepository(BankContext context)
+        private readonly IAccountRepository _accountRepository;
+        public UserRepository(BankContext context, IAccountRepository accountRepository)
         {
             _context = context;
-}
+            _accountRepository = accountRepository;
+        }
     }
 }

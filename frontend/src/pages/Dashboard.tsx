@@ -5,6 +5,7 @@ import Card from '../components/ui/Card';
 
 const Dashboard: React.FC = () => {
   const { user } = useUser();
+  console.log(user?.accounts);
 
   const getTotalBalance = () => {
     if (!user?.accounts) return 0;
@@ -87,6 +88,7 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
             </Card>
+            
           </div>
 
           {/* User Information Grid */}
@@ -153,7 +155,7 @@ const Dashboard: React.FC = () => {
                               {account.accountType} Account
                             </p>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                              ****{account.accountNumber.slice(-4)}
+                              ****
                             </p>
                           </div>
                           <div className="text-right">

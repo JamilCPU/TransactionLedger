@@ -3,6 +3,7 @@ import Card from "../components/ui/Card";
 import { useUser } from "../contexts/UserContext";
 import { toast } from "react-toastify";
 import Input from "../components/ui/Input";
+import { CreditCard } from "lucide-react";
 
 
 const Accounts = () => {
@@ -12,6 +13,8 @@ const Accounts = () => {
     const [accountType, setAccountType] = useState('Checking');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const createNewAccount = async (e: React.FormEvent) => {
+        console.log('Creating new account');
+        console.log(user);
         e.preventDefault();
         setIsSubmitting(true);
         try {
@@ -62,10 +65,20 @@ const Accounts = () => {
             <div className="grid grid-cols-1">
                 {user.accounts.map((account) => (
                     <div>
-                    <Card className="bg-white dark:bg-gray-800 shadow-lg">
+                    <Card className="bg-white dark:bg-gray-800 shadow-lg mb-4">
                         <div className="p-6">
-                            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{account.accountType}</h2>
-                            <p className="text-gray-600 dark:text-gray-400">{account.accountNumber}</p>
+                            <div className="flex items-center">
+                                <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                                    <CreditCard className="h-5 w-5 text-green-600 dark:text-green-400" />
+                                </div>
+                                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                    {account.accountType}</h2>
+                                <div className="ml-auto">${account.balance}</div>
+                            </div>
+                            <div className="flex items-center space-x-3">
+                            <div className = "w-16"></div>
+                            <p className="text-gray-600 dark:text-gray-400">****</p>
+                            </div>
                         </div>
                     </Card>
                         </div>
@@ -74,9 +87,9 @@ const Accounts = () => {
         </div>
     ) : (
         createAccount ? (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-6">
+            <div className="min-h-screen dark:from-gray-900 dark:to-gray-800 p-6">
                 <div className="grid grid-cols-1 max-w-md mx-auto">
-                    <Card className="bg-white dark:bg-gray-800 shadow-lg">
+                    <div className="bg-white dark:bg-gray-800 shadow-lg h-full rounded-md">
                         <div className="p-6">
                             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Create New Account</h2>
                             <form onSubmit={createNewAccount} className="space-y-4">
@@ -114,7 +127,7 @@ const Accounts = () => {
                                 </div>
                             </form>
                         </div>
-                    </Card>
+                    </div>
                 </div>
             </div>
         ) : (
@@ -122,11 +135,12 @@ const Accounts = () => {
                 <Card className="bg-white dark:bg-gray-800 shadow-lg">
                     <div className="flex items-center justify-center">
                         <div className="p-6 mr-10">
-                            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Accounts</h2>
+                        <CreditCard className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+
                             <p className="text-gray-600 dark:text-gray-400">No accounts found</p>
                         </div>
                         <div className="p-6 ml-10">
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={() => setCreateAccount(true)}>Add Account</button>
+                            <button className="bg-green-500 text-white px-4 py-2 rounded-md" onClick={() => setCreateAccount(true)}>Create an Account!</button>
                         </div>
                     </div>
                 </Card>
