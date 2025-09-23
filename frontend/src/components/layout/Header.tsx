@@ -9,7 +9,6 @@ const Header: React.FC = () => {
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: BarChart3 },
     { name: 'Accounts', href: '/accounts', icon: CreditCard },
-    { name: 'Transactions', href: '/transactions', icon: Building2 },
   ];
 
   return (
@@ -19,7 +18,7 @@ const Header: React.FC = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <Building2 className="h-8 w-8 text-primary-600" />
-              <span className="text-xl font-bold text-gray-900 dark:text-gray-100">BankApp</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-gray-100">Tranasction Ledger</span>
             </Link>
           </div>
           
@@ -48,18 +47,8 @@ const Header: React.FC = () => {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             <button className="p-2 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-md">
-              <span className="sr-only">View notifications</span>
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5z" />
-              </svg>
             </button>
-            
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 bg-primary-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">A</span>
-              </div>
-              <span className="hidden md:block text-sm font-medium text-gray-700 dark:text-gray-200">Admin</span>
-            </div>
+          
           </div>
         </div>
       </div>
