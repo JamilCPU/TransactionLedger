@@ -26,7 +26,7 @@ const LoggedOutHeader: React.FC = () => {
                 <Building2 className="h-6 w-6 text-primary-600 dark:text-primary-400" />
               </div>
               <span className="text-xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200">
-                BankApp
+                Transaction Ledger
               </span>
             </Link>
           </div>

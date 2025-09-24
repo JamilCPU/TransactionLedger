@@ -4,10 +4,12 @@ import { useUser } from "../contexts/UserContext";
 import { toast } from "react-toastify";
 import Input from "../components/ui/Input";
 import { CreditCard } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 
 const Accounts = () => {
     const { user } = useUser();
+    const navigate = useNavigate();
     const [createAccount, setCreateAccount] = useState(false);
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const [accountType, setAccountType] = useState('Checking');
@@ -64,8 +66,9 @@ const Accounts = () => {
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-6">
             <div className="grid grid-cols-1">
                 {user.accounts.map((account) => (
-                    <div>
-                    <Card className="bg-white dark:bg-gray-800 shadow-lg mb-4">
+                    <div onClick={() => navigate(`/transactions/${account.id}`)}>
+                    <Card className="bg-white dark:bg-gray-800 shadow-lg mb-4"
+                    >
                         <div className="p-6">
                             <div className="flex items-center">
                                 <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
