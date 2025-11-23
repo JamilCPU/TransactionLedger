@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
+using DotNetEnv;
 
 namespace Backend
 {
@@ -16,6 +17,22 @@ namespace Backend
     {
         public static void Main(string[] args)
         {
+            // Load .env file if it exists
+            var envPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".env");
+            if (File.Exists(envPath))
+            {
+                Env.Load(envPath);
+            }
+            else
+            {
+                // Try loading from backend directory
+                var backendEnvPath = Path.Combine(AppContext.BaseDirectory, ".env");
+                if (File.Exists(backendEnvPath))
+                {
+                    Env.Load(backendEnvPath);
+                }
+            }
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddCors(options =>
@@ -44,6 +61,14 @@ namespace Backend
 
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
             builder.Services.AddSingleton(jwtOptions);
+
+            // Read EnableDetailedLogging from .env file (defaults to true if not set)
+            var enableDetailedLogging = Env.GetString("EnableDetailedLogging", "true");
+            var loggingOptions = new LoggingOptions 
+            { 
+                EnableDetailedLogging = bool.Parse(enableDetailedLogging) 
+            };
+            builder.Services.AddSingleton(loggingOptions);
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
