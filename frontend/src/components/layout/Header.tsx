@@ -18,7 +18,7 @@ const Header: React.FC = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <Building2 className="h-8 w-8 text-primary-600" />
-              <span className="text-xl font-bold text-gray-900 dark:text-gray-100">Tranasction Ledger</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-gray-100">TransactionAnalytics</span>
             </Link>
           </div>
           

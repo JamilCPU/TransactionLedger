@@ -1,13 +1,14 @@
-# Banking Frontend Application
+# TransactionAnalytics Frontend
 
-A modern React-based frontend for the banking management system, built with TypeScript, Vite, and Tailwind CSS.
+A modern React-based frontend for TransactionAnalytics, a transaction analysis application with AI-powered insights. Built with TypeScript, Vite, and Tailwind CSS.
 
 ## Features
 
-- 🏦 **Dashboard Overview** - Real-time statistics and recent activity
-- 👥 **User Management** - Create, view, and manage bank users
-- 💳 **Account Management** - Handle different types of bank accounts
+- 📊 **Dashboard Overview** - Real-time statistics and recent activity
+- 👥 **User Management** - Create, view, and manage users
+- 💳 **Account Management** - Handle different types of accounts
 - 💰 **Transaction Tracking** - Monitor deposits, withdrawals, and transfers
+- 🤖 **AI-Powered Analysis** - Intelligent transaction insights and analytics
 - 🎨 **Modern UI** - Clean, responsive design with Tailwind CSS
 - ⚡ **Fast Development** - Hot module replacement with Vite
 - 🔄 **Data Fetching** - React Query for efficient API calls
@@ -124,4 +125,4 @@ The application uses Tailwind CSS with a custom design system:
 
 ## License
 
-This project is part of the Banking Management System.
+This project is part of TransactionAnalytics - AI-powered transaction analysis platform.
