@@ -1,6 +1,6 @@
 ﻿# CourtesyBanking
 
-Transaction Ledger is a full-stack banking application designed to simulate core financial operations such as user registration, account creation, secure login, and transaction management.
+Transaction Analysis is a full-stack banking application designed to simulate core financial operations such as user registration, account creation, secure login, and transaction management.
 
 The backend is built using ASP.NET Core (MVC pattern) with Entity Framework Core for data access and SQLite for local persistence.
 
@@ -31,6 +31,7 @@ This should tell the application where to point its URLs. The contents should lo
 > VITE_FRONTEND_URL = http://localhost:5173
 
 Once you do that, attempt to access the frontend to run the application as intended!
+
 
 
 
